@@ -1,27 +1,38 @@
 // alert("Hello word!")
 const editProfileButton = document.querySelector(".profile__edit-btn");
 const profileName = document.querySelector(".profile__name");
-const profileProfessions = document.querySelector(".profile__professions");
+const profileJob = document.querySelector(".profile__job");
 
 const popup  = document.querySelector(".popup");
 const popupCloseButton = popup.querySelector(".popup__close-btn");
 
 const form = popup.querySelector(".form");
 const formName = form.querySelector("input[name='name']");
-const formProfessions = form.querySelector("input[name='professions']");
+const formJob = form.querySelector("input[name='job']");
+const formSaveButton = form.querySelector(".form_save-btn");
 
 
-
-editProfileButton.addEventListener ('click',function (){
+function showPopup () {
   formName.value = profileName.textContent;
-  formProfessions.value = profileProfessions.textContent;
-
+  formJob.value = profileJob.textContent;
   popup.classList.remove("popup_hide");
-})
+}
 
-popupCloseButton.addEventListener ('click',function (){
+function hidePopup () {
   popup.classList.add("popup_hide");
-})
+}
+
+function saveForm (e){
+  e.preventDefault();
+
+  profileName.textContent = formName.value;
+  profileJob.textContent = formJob.value;
+  hidePopup();
+}
+
+editProfileButton.addEventListener ('click',showPopup);
+popupCloseButton.addEventListener ('click', hidePopup);
+formSaveButton.addEventListener ('click',saveForm);
 
 
 
