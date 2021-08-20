@@ -31,32 +31,30 @@
 .profile__name {
 
 }
-.profile__edit-button {
+.profile__edit-btn {
   border: 1px solid #FFFFFF;
   background-color: black;
   width: 24px;
   height: 24px;
 }
 
-.profile__edit-button-img {
-  color: #FFFFFF;
-  background-image: url(../images/profile__edit-button.svg);
-  background-position: center;
-  background-size: cover;
+.profile__edit-btn-img {
+  width: 10px;
+  height: 10px;
 }
 
-.profile__proffessions {
+.profile__professions {
 
 }
 
-.profile__add-button {
+.profile__add-btn {
   border: solid 1px white;
   background-color: black;
   width: 150px;
   height: 50px;
 }
 
-.profile__add-button-img {
+.profile__add-btn-img {
   width: 22px;
   height: 22px;
 }
@@ -85,8 +83,8 @@
 
 }
 
-.card__like-button {
-  background-image: url(../images/card__like-button.svg);
+.card__like-btn {
+  background-image: url(../images/card__like-btn.svg);
 
   background-position: center;
   background-size: cover;
@@ -108,3 +106,44 @@
 .footer {
   color: #545454;
 }
+  /*-popup------------------------ */
+
+  .popup {
+    /*  */
+    opacity: .5;
+    background-color: black;
+    /*  */
+    position: fixed;
+    left: 0;
+    top: 0;
+    /*  */
+    width: 100vw;
+    height: 100vh;
+    /*  */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .popup__container {
+    background-color: white;
+    /*  */
+    max-width: 430px;
+    /*  */
+    position: relative;
+    /*  */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .popup__close-btn {
+    position: absolute;
+    top:  -30px;
+    right: -30px;
+    background-color: white;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+  }

@@ -28,7 +28,7 @@
                 class="profile__edit-btn-img"
               />
             </button>
-            <p class="profile__proffessions">Explorer</p>
+            <p class="profile__professions">Explorer</p>
           </div>
           <button type="button" class="profile__add-btn">
             <img
@@ -47,7 +47,7 @@
               />
               <p class="card__title">Yosemite Valley</p>
               <button type="button" class="card__like-btn">
-                <img src="./images/card__like-btn.svg" alt="">
+                <img src="./images/card__like-btn.svg" alt="" />
               </button>
             </li>
             <li class="card">
@@ -58,7 +58,7 @@
               />
               <p class="card__title">Lake Louise</p>
               <button type="button" class="card__like-btn">
-                <img src="./images/card__like-btn.svg" alt="">
+                <img src="./images/card__like-btn.svg" alt="" />
               </button>
             </li>
 
@@ -70,7 +70,7 @@
               />
               <p class="card__title">Bald Mountains</p>
               <button type="button" class="card__like-btn">
-                <img src="./images/card__like-btn.svg" alt="">
+                <img src="./images/card__like-btn.svg" alt="" />
               </button>
             </li>
 
@@ -82,7 +82,7 @@
               />
               <p class="card__title">Latemar</p>
               <button type="button" class="card__like-btn">
-                <img src="./images/card__like-btn.svg" alt="">
+                <img src="./images/card__like-btn.svg" alt="" />
               </button>
             </li>
 
@@ -94,7 +94,7 @@
               />
               <p class="card__title">Vanoise Nationa...</p>
               <button type="button" class="card__like-btn">
-                <img src="./images/card__like-btn.svg" alt="">
+                <img src="./images/card__like-btn.svg" alt="" />
               </button>
             </li>
 
@@ -106,7 +106,7 @@
               />
               <p class="card__title">Lago di Braies</p>
               <button type="button" class="card__like-btn">
-                <img src="./images/card__like-btn.svg" alt="">
+                <img src="./images/card__like-btn.svg" alt="" />
               </button>
             </li>
           </ul>
@@ -116,7 +116,27 @@
         <p class="footer__copyright">&copy; 2021 AkkaVin</p>
       </section>
     </div>
-    <div class="modal"></div>
+    <div class="popup">
+      <div class="popup__container">
+        <button type="button" class="popup__close-btn">C</button>
+        <h3 class="popup__title">Edit profile</h3>
+        <form action="#" class="form">
+          <input
+            type="text"
+            class="form__input"
+            name="name"
+            placeholder="name"
+          />
+          <input
+            type="text"
+            class="form__input"
+            name="professions"
+            placeholder="professions"
+          />
+          <button type="submit" class="form_save-btn">Save</button>
+        </form>
+      </div>
+    </div>
     <script src="./index.js"></script>
   </body>
 </html>
