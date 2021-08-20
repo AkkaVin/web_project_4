@@ -125,6 +125,10 @@
     justify-content: center;
   }
 
+  .popup_hide {
+    display: none;
+  }
+
   .popup__container {
     background-color: white;
     /*  */
