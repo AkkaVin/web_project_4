@@ -93,9 +93,6 @@
   height: 10px;
 }
 
-.profile__professions {
-}
-
 .profile__add-btn {
   border: solid 1px white;
   background-color: black;
@@ -152,7 +149,19 @@
 
 .footer {
   color: #545454;
+  margin: 68px 0 60px 0;
 }
+
+.footer__copyright {
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+
 /*-popup------------------------ */
 
 .popup {
