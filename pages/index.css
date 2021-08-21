@@ -110,14 +110,17 @@
 }
 
 .cards {
-  margin: 0 auto;
+  margin: 0;
+  padding: 0;
 }
 .cards__container {
-  max-width: 100%;
+  margin: 0;
+  padding: 0;
+
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr 1fr;
-  gap: 20px 17px;
+  grid-gap: 20px 17px;
 }
 
 .card {
