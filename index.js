@@ -1,15 +1,15 @@
 // alert("Hello word!")
-const editProfileButton = document.querySelector(".profile__edit-btn");
-const profileName = document.querySelector(".profile__name");
-const profileJob = document.querySelector(".profile__job");
+let editProfileButton = document.querySelector(".profile__edit-btn");
+let profileName = document.querySelector(".profile__name");
+let profileJob = document.querySelector(".profile__job");
 
-const popup  = document.querySelector(".popup");
-const popupCloseButton = popup.querySelector(".popup__close-btn");
+let popup  = document.querySelector(".popup");
+let popupCloseButton = popup.querySelector(".popup__close-btn");
 
-const form = popup.querySelector(".form");
-const formName = form.querySelector("input[name='name']");
-const formJob = form.querySelector("input[name='job']");
-const formSaveButton = form.querySelector(".form_save-btn");
+let form = popup.querySelector(".form");
+let formName = form.querySelector("input[name='name']");
+let formJob = form.querySelector("input[name='job']");
+let formSaveButton = form.querySelector(".form_save-btn");
 
 
 function showPopup () {

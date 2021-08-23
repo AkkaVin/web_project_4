@@ -1,16 +1,23 @@
 # Project 4: Around The U.S.
 
-### Overview
+### Around The U.S. at Yandex Practicum
 
-* Figma
-* Images
+* Intro
+* Technologies
+* Links
 
-**Figma**
+**Intro**
 
-* [Link to the project in Figma](https://www.figma.com/file/SurN1jaeEQIhuZEDMhmWWf/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1)
+* This is a project about explorers, who researched the US. Responsive and JS used. A part of course at Yandex Practicum
 
-**Images**
+**Technologies**
 
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster. 
+* CSS3
+* HTML5
+* JavaScript
+* BEM
 
-Have fun with JavaScript!
+**Links**
+
+* <a href="https://akkavin.github.io/web_project_4/">Link to project</a>
+
