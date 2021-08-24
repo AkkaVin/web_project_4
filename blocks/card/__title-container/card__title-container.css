@@ -1,0 +1,8 @@
+.card__title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 5px;
+  max-width: 87.234%;
+  margin: 8.865% 5.319% 10.993% 7.446%;
+}

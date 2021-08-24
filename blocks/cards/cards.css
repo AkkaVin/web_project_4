@@ -2,37 +2,4 @@
   margin: 0;
   padding: 0;
 }
-.cards__container {
-  margin: 0;
-  padding: 0;
-  max-width: 100%;
-  /* box-sizing: border-box; */
 
-  display: grid;
-  grid-template-columns: repeat(auto-fit, calc(100% / 3 - 12px));
-  grid-template-rows: 1fr 1fr;
-  grid-gap: 20px 17px;
-
-  list-style: none;
-}
-
-/* 1024px */
-@media screen and (max-width: 1024px) {
-  .cards__container {
-    grid-template-columns: repeat(auto-fit, calc(100% / 2 - 9px));
-  }
-}
-
-/* 768px */
-@media screen and (max-width: 860px) {
-  .cards__container {
-    grid-template-columns: 100%;
-  }
-}
-
-/* 320px */
-@media screen and (max-width: 540px) {
-  .cards__container {
-    margin: 0 19px;
-  }
-}
