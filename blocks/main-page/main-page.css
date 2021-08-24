@@ -1,0 +1,24 @@
+.main-page {
+  margin: 45px 200px 0 200px;
+}
+
+/* 1024 */
+@media screen and (max-width: 1024px) {
+  .main-page {
+    margin: 45px 100px 0px 100px;
+  }
+}
+
+/* 768px */
+@media screen and (max-width: 860px) {
+  .main-page {
+    margin: 45px 50px 0px 50px;
+  }
+}
+
+/* 320px */
+@media screen and (max-width: 540px) {
+  .main-page {
+    margin: 28px 0 0 0;
+  }
+}
