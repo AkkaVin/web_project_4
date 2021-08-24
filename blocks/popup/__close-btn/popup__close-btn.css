@@ -7,7 +7,7 @@
   cursor: pointer;
   /*  */
   background-color: rgba(0, 0, 0, 0);
-  background-image: url(../../images/popup__close-btn.svg);
+  background-image: url(../../../images/popup__close-btn.svg);
   background-position: center;
   background-size: cover;
   border: none;
@@ -15,7 +15,6 @@
   /*  */
   width: 40px;
   height: 40px;
-  border: none;
   /*  */
   opacity: 1;
   transition: opacity 0.5s;
