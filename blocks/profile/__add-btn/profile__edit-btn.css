@@ -1,0 +1,37 @@
+.profile__add-btn {
+  border: solid 1px white;
+  background-color: black;
+  background-image: url(../../../images/profile__add-btn.svg);
+  background-repeat: no-repeat;
+  background-position: 50%;
+/*  */
+  width: 150px;
+  height: 50px;
+  padding: 0;
+  margin: 0 0 0 auto;
+/*  */
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.profile__add-btn:hover {
+  opacity: 0.6;
+}
+
+/* 768px */
+@media screen and (max-width: 860px) {
+  .profile__add-btn {
+    width: 60%;
+    margin: 0 auto;
+  }
+}
+
+/* 320px */
+@media screen and (max-width: 540px) {
+  .profile__add-btn {
+    width: 100%;
+    margin: 0 auto;
+    background-size: 16px 16px;
+  }
+}
