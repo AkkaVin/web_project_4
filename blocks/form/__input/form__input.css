@@ -1,0 +1,24 @@
+.form__input {
+  border: 0;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  /*  */
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  /*  */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  /*  */
+  margin: 0;
+  padding: 0 0 9.26px 0;
+}
+
+/* 320px */
+@media screen and (max-width: 540px) {
+  .form__input {
+    padding: 0 0 8px 0;
+  }
+}

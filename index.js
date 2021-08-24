@@ -9,7 +9,7 @@ let popupCloseButton = popup.querySelector(".popup__close-btn");
 let form = popup.querySelector(".form");
 let formName = form.querySelector("input[name='name']");
 let formJob = form.querySelector("input[name='job']");
-let formSaveButton = form.querySelector(".form_save-btn");
+let formSaveButton = form.querySelector(".form__save-btn");
 
 
 function showPopup () {
