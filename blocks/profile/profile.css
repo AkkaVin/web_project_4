@@ -4,9 +4,9 @@
   display: flex;
   justify-items: flex-start;
   align-items: center;
-  gap: 25px;
+  gap: 26px;
   /*  */
-  margin: 36.25px 0 46.25px 0;
+  margin: 40px 0 50px 0;
 }
 
 /* 768px */
@@ -19,6 +19,6 @@
 /* 320px */
 @media screen and (max-width: 540px) {
   .profile {
-    margin: 38.25px 19px 26.25px 19px;
+    margin: 42px 19px 36px 19px;
   }
 }
