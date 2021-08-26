@@ -32,7 +32,7 @@ function saveForm (e){
 
 editProfileButton.addEventListener ('click',showPopup);
 popupCloseButton.addEventListener ('click', hidePopup);
-formSaveButton.addEventListener ('click',saveForm);
+form.addEventListener ('submit',saveForm);
 
 
 
