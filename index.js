@@ -34,6 +34,6 @@ editProfileButton.addEventListener ('click',showPopup);
 popupCloseButton.addEventListener ('click', hidePopup);
 form.addEventListener ('submit',saveForm);
 
-
-
+// let cardTemplate = document.querySelector(".card-template").content;
+// console.log ({cardTemplate},cardTemplate);
 
