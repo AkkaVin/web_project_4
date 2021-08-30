@@ -1,14 +1,21 @@
+/* init ---------------------------------------------------------*/
+
+function init() {
+  initCards();
+}
+
+function initCards() {
+  initialCards.forEach((card) => addOneCard(card));
+}
+
 /* popup ----------------------------------------------------- */
 
-function togglePopup ()
-{
+function togglePopup() {
   if (popup.classList.contains("popup_hide")) {
     formName.value = profileName.textContent;
     formJob.value = profileJob.textContent;
-
   }
   popup.classList.toggle("popup_hide");
-
 }
 
 /*--profile edit form ----------------------------------------------------------*/
@@ -33,7 +40,8 @@ function addOneCard(card) {
     );
   let newCardImage = newCard.querySelector(".card__image");
   newCardImage.src = card.link;
-  newCardImage.addEventListener("click", evt =>
+  newCardImage.alt = card.alt;
+  newCardImage.addEventListener("click", (evt) =>
     alert("TODO fullscreen card image")
   );
   newCard.querySelector(".card__title").textContent = card.name;
@@ -48,35 +56,41 @@ function addOneCard(card) {
 
 /* -----------------------------------------*/
 
-/* // init data
+// init data
 const initialCards = [
   {
     name: "Yosemite Valley",
-    link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
+    link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
+    alt: "View of the Yosemite Valley with sun-scorched grass in the foreground and high mountains with coniferous forest in the distance.",
   },
   {
     name: "Lake Louise",
-    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
+    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
+    alt: "View of Lake Louise in the middle of a valley with a water surface and a reflection of standing mountains in the distance",
   },
   {
     name: "Bald Mountains",
-    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
+    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg",
+    alt: "A view of the Bald Mountains from the height of one of the mountains and a view of the house and the forest in the intermontane lowlands",
   },
   {
     name: "Latemar",
-    link: "https://code.s3.yandex.net/web-code/latemar.jpg"
+    link: "https://code.s3.yandex.net/web-code/latemar.jpg",
+    alt: "View of the lunar flare on a frozen lake against the background of the starry sky",
   },
   {
     name: "Vanoise National Park",
-    link: "https://code.s3.yandex.net/web-code/vanoise.jpg"
+    link: "https://code.s3.yandex.net/web-code/vanoise.jpg",
+    alt: "A view of a snow-covered path in the middle of Vanoise National Park surrounded by a slightly snow-covered winter mixed forest.",
   },
   {
     name: "Lago di Braies",
-    link: "https://code.s3.yandex.net/web-code/lago.jpg"
-  }
+    link: "https://code.s3.yandex.net/web-code/lago.jpg",
+    alt: "View of the boats moored at the high pier at Lago di Braies",
+  },
 ];
 
-*/
+/* -----------------------------------------*/
 
 // profile
 // -- buttons
@@ -103,7 +117,6 @@ let formSaveButton = form.querySelector(".form__save-btn");
 let formName = form.querySelector(".form__input_type_name");
 let formJob = form.querySelector(".form__input_type_job");
 
-
 // all listeners
 editProfileButton.addEventListener("click", togglePopup);
 popupCloseButton.addEventListener("click", togglePopup);
@@ -116,3 +129,7 @@ addCardButton.addEventListener("click", function (evt) {
   addOneCard(card);
 });
 form.addEventListener("submit", saveForm);
+
+/*------------------------------------------- */
+
+init();
