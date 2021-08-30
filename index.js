@@ -61,16 +61,25 @@ function saveForm(e) {
   hidePopup();
 }
 
-function toggleCardLike (evt) {
-  evt.currentTarget.classList.toggle("card__like-btn_active");
-}
-
 function addOneCard(card) {
   let newCard = cardTemplate.cloneNode(true);
 
-  newCard.querySelector(".card__image").src = card.link;
+  newCard
+    .querySelector(".card__remove-btn")
+    .addEventListener("click", (evt) =>
+      evt.currentTarget.parentElement.remove()
+    );
+  let newCardImage = newCard.querySelector(".card__image");
+  newCardImage.src = card.link;
+  newCardImage.addEventListener("click", evt =>
+    alert("TODO fullscreen card image")
+  );
   newCard.querySelector(".card__title").textContent = card.name;
-  newCard.querySelector(".card__like-btn").addEventListener ("click", toggleCardLike)
+  newCard
+    .querySelector(".card__like-btn")
+    .addEventListener("click", (evt) =>
+      evt.currentTarget.classList.toggle("card__like-btn_active")
+    );
 
   cardsContainer.prepend(newCard);
 }
@@ -82,7 +91,7 @@ addCardButton.addEventListener("click", function (evt) {
   const card = {
     name: "Yosemite Valley",
     // link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
-   link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
+    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
   };
   addOneCard(card);
 });
