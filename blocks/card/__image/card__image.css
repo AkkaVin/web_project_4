@@ -1,3 +1,43 @@
 .card__image {
   width: 100%;
+
+  min-height: 77%;
+  max-height: 77%;
+
+  object-fit:cover;
+  object-position: center;
+
+}
+
+
+/* 1024px */
+@media screen and (max-width: 1024px) {
+  .card__image {
+    min-height: 79%;
+    max-height: 79%;
+  }
+}
+
+/* 768px */
+@media screen and (max-width: 860px) {
+  .card__image {
+    min-height: 80.87%;
+    max-height: 80.87%;
+  }
+}
+
+/* 540px */
+@media screen and (max-width: 540px) {
+  .card__image {
+    min-height: 79.6%;
+    max-height: 79.6%;
+  }
+}
+
+/* 320px */
+@media screen and (max-width: 320px) {
+  .card__image {
+    min-height: 76.845%;
+    max-height: 76.845%;
+  }
 }

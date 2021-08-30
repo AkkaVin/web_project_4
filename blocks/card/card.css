@@ -5,7 +5,38 @@
   background-color: rgba(255, 255, 255, 1);
   border-radius: 10px;
   overflow: hidden;
+  box-sizing: border-box;
   /*  */
   display: flex;
   flex-direction: column;
+
+  max-height: 361px;
+}
+
+/* 1024px */
+@media screen and (max-width: 1024px) {
+  .card {
+    max-height: 512px;
+  }
+}
+
+/* 768px */
+@media screen and (max-width: 860px) {
+  .card {
+    max-height: 940px;
+  }
+}
+
+/* 540px */
+@media screen and (max-width: 540px) {
+  .card {
+    max-height: 502px;
+  }
+}
+
+/* 320px */
+@media screen and (max-width: 320px) {
+  .card {
+    max-height: 361px;
+  }
 }
