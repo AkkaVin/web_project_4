@@ -8,24 +8,46 @@ function initCards() {
   initialCards.forEach((card) => addOneCard(card));
 }
 
-/* popup ----------------------------------------------------- */
+function initEditProfileForm () {
+  formName.value = profileName.textContent;
+  formJob.value = profileJob.textContent;
+}
 
-function togglePopup() {
-  if (popup.classList.contains("popup_hide")) {
-    formName.value = profileName.textContent;
-    formJob.value = profileJob.textContent;
-  }
-  popup.classList.toggle("popup_hide");
+/* show / hide  popup ----------------------------------------------------- */
+
+// function togglePopup() {
+//   if (popup.classList.contains("popup_hide")) {
+//     formName.value = profileName.textContent;
+//     formJob.value = profileJob.textContent;
+//   }
+//   popup.classList.toggle("popup_hide");
+// }
+
+function showPopup (popup){
+  popup.classList.remove("popup_hide");
+}
+
+function hidePopup (popup){
+  popup.classList.add("popup_hide");
 }
 
 /*--profile edit form ----------------------------------------------------------*/
 
-function saveForm(e) {
-  e.preventDefault();
+function saveForm(evt) {
 
-  profileName.textContent = formName.value;
-  profileJob.textContent = formJob.value;
-  togglePopup();
+  evt.preventDefault();
+  // profile-edit-form
+  // alert(evt.currentTarget);
+  const formNameToSave = evt.target.getAttribute("name");
+
+  if (formNameToSave == "profile-edit-form") {
+    profileName.textContent = formName.value;
+    profileJob.textContent = formJob.value;
+  }
+  if (formNameToSave == "add-card-form") {
+    alert ("Save add-card form!")
+  }
+  // debugger;
 }
 
 /* --cards-------------------------------------------------------------------*/
@@ -104,22 +126,36 @@ let profileJob = document.querySelector(".profile__job");
 let cardsContainer = document.querySelector(".cards__container");
 let cardTemplate = document.querySelector(".card-template").content;
 
-// popup
-let popup = document.querySelector(".popup");
+// popups
+
+let editProfilePopup = document.querySelector(".popup_type_profile-edit");
 // -- buttons
-let popupCloseButton = popup.querySelector(".popup__close-btn");
+let popupCloseButton = editProfilePopup.querySelector(".popup__close-btn");
 
 // edit_profile_form
-let form = popup.querySelector(".form");
+let form = editProfilePopup.querySelector(".form");
 // -- buttons
-let formSaveButton = form.querySelector(".form__save-btn");
+// let formSaveButton = form.querySelector(".form__save-btn");
 // -- inputs
 let formName = form.querySelector(".form__input_type_name");
 let formJob = form.querySelector(".form__input_type_job");
 
 // all listeners
-editProfileButton.addEventListener("click", togglePopup);
-popupCloseButton.addEventListener("click", togglePopup);
+// editProfileButton.addEventListener("click", togglePopup);
+editProfileButton.addEventListener("click", () => {
+  // init profile form
+  initEditProfileForm();
+  // show popup with form
+  showPopup(editProfilePopup);
+});
+popupCloseButton.addEventListener("click", () => hidePopup(editProfilePopup));
+
+form.addEventListener("submit", (evt) => {
+  saveForm(evt);
+  hidePopup(editProfilePopup);
+});
+
+
 addCardButton.addEventListener("click", function (evt) {
   const card = {
     name: "Yosemite Valley",
@@ -128,7 +164,7 @@ addCardButton.addEventListener("click", function (evt) {
   };
   addOneCard(card);
 });
-form.addEventListener("submit", saveForm);
+
 
 /*------------------------------------------- */
 
