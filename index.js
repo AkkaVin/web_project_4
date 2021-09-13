@@ -13,6 +13,11 @@ function initEditProfileForm () {
   inputTypeJob.value = profileJob.textContent;
 }
 
+function initAddCardForm() {
+  inputTypeCardTitle.value = "";
+  inputTypeUrl.value = "";
+}
+
 /* show / hide  popup ----------------------------------------------------- */
 
 function showPopup (popup){
@@ -39,6 +44,11 @@ function saveForm(evt) {
   //add-card-form
   if (formNameToSave == "add-card-form") {
     alert ("Save add-card form!")
+    addOneCard(  {
+      name: inputTypeCardTitle,
+      link: inputTypeUrl,
+      alt: inputTypeCardTitle
+    })
   }
   // debugger;
 }
@@ -127,12 +137,15 @@ let addCardPopup = document.querySelector(".popup_type_add-card");
 let editProfilePopupCloseButton = editProfilePopup.querySelector(".popup__close-btn");
 let addCardPopupCloseButton = addCardPopup.querySelector(".popup__close-btn");
 
-// edit_profile_form
+// forms
 let editProfileForm = editProfilePopup.querySelector(".form");
+let addCardForm = addCardPopup.querySelector(".form");
 
 // -- inputs
 let inputTypeName = editProfileForm.querySelector(".form__input_type_name");
 let inputTypeJob = editProfileForm.querySelector(".form__input_type_job");
+let inputTypeCardTitle = addCardForm.querySelector(".form__input_type_card-title");
+let inputTypeUrl = addCardForm.querySelector(".form__input_type_url");
 
 // all listeners
 
@@ -145,7 +158,7 @@ editProfileButton.addEventListener("click", () => {
 
 addCardButton.addEventListener("click", () => {
   // init add-card form
-  // initAddCardForm();
+  initAddCardForm();
   // show popup with form
   showPopup(addCardPopup);
 });
@@ -158,15 +171,19 @@ editProfileForm.addEventListener("submit", (evt) => {
   hidePopup(editProfilePopup);
 });
 
-
-addCardButton.addEventListener("click", function (evt) {
-  const card = {
-    name: "Yosemite Valley",
-    // link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
-    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
-  };
-  addOneCard(card);
+addCardForm.addEventListener("submit", (evt) => {
+  saveForm(evt);
+  hidePopup(addCardPopup);
 });
+
+// addCardButton.addEventListener("click", function (evt) {
+//   const card = {
+//     name: "Yosemite Valley",
+//     // link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
+//     link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
+//   };
+//   addOneCard(card);
+// });
 
 
 /*------------------------------------------- */
