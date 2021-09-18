@@ -19,12 +19,11 @@ function initAddCardForm() {
 }
 
 function initImagePopup(card) {
-  // alert(card);
   let popupImage = imagePopup.querySelector(".popup__image");
-  let popupImageTitle = imagePopup.querySelector(".popup__caption");
+  let popupImageTitle = imagePopup.querySelector(".popup__image-title");
 
   popupImage.src = card.link;
-  popupImageTitle = card.name;
+  popupImageTitle.textContent = card.name;
 }
 
 /* show / hide  popup ----------------------------------------------------- */
@@ -52,7 +51,6 @@ function saveForm(evt) {
   }
   //add-card-form
   if (formNameToSave == "add-card-form") {
-    // alert ("Save add-card form!")
     addOneCard(  {
       name: inputTypeCardTitle.value,
       link: inputTypeUrl.value,
@@ -76,7 +74,6 @@ function addOneCard(card) {
   newCardImage.src = card.link;
   newCardImage.alt = card.alt;
   newCardImage.addEventListener("click", (evt) => {
-    // alert("TODO fullscreen card image")
     // init image
     initImagePopup(card);
     //show image popup

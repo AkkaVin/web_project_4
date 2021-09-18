@@ -1,8 +1,9 @@
 .popup__container_type-image {
-  /* background-color: transparent; */
- box-shadow: none;
-  /* position: relative; */
-  max-width: 80vw;
-  max-height: 80vw;
-  /* width: auto; */
+  background-color: transparent;
+  box-shadow: none;
+  /*  */
+  max-width: 75vw;
+  max-height: 85vh;
+  /*  */
+  padding: 0;
 }
