@@ -58,18 +58,22 @@
             class="form__input form__input_type_name"
             name="name"
             placeholder="name"
-            maxlength="50"
+            minlength="2"
+            maxlength="40"
             required
           />
+          <span class="form__error">&nbsp;</span>
           <input
             type="text"
             class="form__input form__input_type_job"
             name="job"
             placeholder="job"
-            maxlength="70"
+            minlength="2"
+            maxlength="200"
             required
           />
-          <button type="submit" class="form__save-btn">Save</button>
+          <span class="form__error">&nbsp;</span>
+          <button type="submit" class="form__save-btn form__save-btn_inactive">Save</button>
         </form>
       </div>
     </div>
@@ -91,6 +95,7 @@
             maxlength="50"
             required
           />
+          <span class="form__error">&nbsp;</span>
           <input
             type="url"
             class="form__input form__input_type_url"
@@ -98,6 +103,7 @@
             placeholder="Url"
             required
           />
+          <span class="form__error">&nbsp;</span>
           <button type="submit" class="form__save-btn">Create</button>
         </form>
       </div>

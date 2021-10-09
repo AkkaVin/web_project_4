@@ -32,7 +32,7 @@ function hidePopup(popup) {
   popup.classList.add("popup_hide");
 }
 
-/* submit event handlers ----------------------------------------------------- */
+/* submit event forms handlers ----------------------------------------------------- */
 
 function profileFormHandler(evt) {
   saveEditProfileForm(evt);
