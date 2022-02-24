@@ -26,10 +26,35 @@ function initImagePopup(card) {
 
 function showPopup(popup) {
   popup.classList.remove("popup_hide");
+  document.addEventListener('keyup', (evt) => handleEscapeUp(evt , popup))
+  popup.addEventListener('click', (evt) => handleOverlayPopupContent(evt , popup))
 }
 
 function hidePopup(popup) {
   popup.classList.add("popup_hide");
+  document.removeEventListener('keyup', (evt) => handleEscapeUp(evt , popup))
+  popup.removeEventListener('click', (evt) => handleOverlayPopupContent(evt , popup))
+}
+
+/* escape key up with popup handler --------------------------------------------------------*/
+
+function handleEscapeUp (evt, popup) {
+  evt.preventDefault();
+  if (evt.which === escapeKeyCode) {
+    hidePopup(popup);
+  }
+}
+
+/*  click overlay popup content handler --------------------------------------------------------*/
+
+function handleOverlayPopupContent (evt, popup) {
+
+  const evtCurrentTargetClassList = evt.currentTarget.classList.toString();
+  const evtTargetClassList = evt.target.classList.toString();
+
+  if (evtCurrentTargetClassList == evtTargetClassList) {
+    hidePopup(popup);
+  }
 }
 
 /* submit event forms handlers ----------------------------------------------------- */
@@ -44,7 +69,7 @@ function addCardFormHandler(evt) {
   hidePopup(addCardPopup);
 }
 
-/*--  save profile edit / add card  form ----------------------------------------------------------*/
+/* save profile edit / add card  form ----------------------------------------------------------*/
 
 function saveEditProfileForm(evt) {
   evt.preventDefault();
@@ -138,6 +163,8 @@ const initialCards = [
 ];
 
 /* -----------------------------------------*/
+
+const escapeKeyCode = 27;
 
 // profile
 // -- buttons

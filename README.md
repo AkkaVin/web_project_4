@@ -1,4 +1,4 @@
-# Project 4: Around The U.S.
+# Projects 4-6: Around The U.S.
 
 ### Around The U.S. at Yandex Practicum
 
@@ -8,7 +8,7 @@
 
 **Intro**
 
-* This is a project about explorers, who researched the US. Responsive and JS used. A part of course at Yandex Practicum
+* This is a project about explorers, who researched the US. Responsive and JS used, includes form validation. A part of course at Yandex Practicum
 
 **Technologies**
 
