@@ -46,6 +46,7 @@ function toggleButtonState (inputs, button, settings){
   }
 }
 
+// to switch on validation
 function  enableValidation(settings) {
 
   const {formSelector, inputSelector, submitButtonSelector,...otherSettings} = settings;
@@ -70,5 +71,6 @@ function  enableValidation(settings) {
   })
 }
 
+// switch on validation
 enableValidation(validationSettings);
 

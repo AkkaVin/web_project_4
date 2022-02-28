@@ -1,5 +1,9 @@
 .form__save-btn_inactive {
   background-color: white;
   color: black;
+  cursor: default;
+}
+
+.form__save-btn_inactive:hover {
   opacity: 0.2;
 }
