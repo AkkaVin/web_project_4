@@ -39,7 +39,7 @@ function toggleButtonState (inputs, button, settings){
 
   if (hasInvalidInput(inputs)) {
     button.classList.add(settings.inactiveButtonClass);
-    button.disabled = 'disabled';
+    button.disabled = true;
   } else {
     button.classList.remove(settings.inactiveButtonClass);
     button.disabled = false;
@@ -53,19 +53,20 @@ function  enableValidation(settings) {
   // forms
   const forms = [...document.querySelectorAll(formSelector)];
 
+  // to list all forms
   forms.forEach (form => {
     form.addEventListener("submit", function (evt) {
       evt.preventDefault();
     })
     const inputs = [...form.querySelectorAll(inputSelector)];
     const saveButton = form.querySelector(submitButtonSelector);
-
+    // check button state and toggle if it need
     toggleButtonState(inputs,saveButton, otherSettings)
 
     inputs.forEach( input => {
       input.addEventListener('input',() =>{
           checkInputValidity(input, otherSettings)
-          toggleButtonState(inputs,saveButton, otherSettings)
+          toggleButtonState(inputs, saveButton, otherSettings)
       })
     })
   })
