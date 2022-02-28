@@ -19,5 +19,5 @@
 
 **Links**
 
-* <a href="https://akkavin.github.io/web_project_4/">Link to project</a>
+* [Link to project](https://akkavin.github.io/web_project_4/)
 
