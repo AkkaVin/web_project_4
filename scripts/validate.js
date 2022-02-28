@@ -65,7 +65,7 @@ function  enableValidation(settings) {
 
     inputs.forEach( input => {
       input.addEventListener('input',() =>{
-          checkInputValidity(input, otherSettings)
+            checkInputValidity(input, otherSettings)
           toggleButtonState(inputs, saveButton, otherSettings)
       })
     })
@@ -74,4 +74,6 @@ function  enableValidation(settings) {
 
 // switch on validation
 enableValidation(validationSettings);
+
+export {toggleButtonState};
 

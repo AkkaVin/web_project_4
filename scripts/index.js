@@ -1,3 +1,5 @@
+import { toggleButtonState } from './validate.js'
+
 /* init ---------------------------------------------------------*/
 
 function init() {
@@ -26,50 +28,55 @@ function initImagePopup(card) {
 
 function showPopup(popup) {
   popup.classList.remove("popup_hide");
-  document.addEventListener('keyup', (evt) => handleEscapeUp(evt , popup))
-  popup.addEventListener('click', (evt) => handleOverlayPopupContent(evt , popup))
+  document.addEventListener('keyup', handleEscapeUp)
+  popup.addEventListener('mousedown', handleOverlayPopupContent)
 }
 
 function hidePopup(popup) {
   popup.classList.add("popup_hide");
-  document.removeEventListener('keyup', (evt) => handleEscapeUp(evt , popup))
-  popup.removeEventListener('click', (evt) => handleOverlayPopupContent(evt , popup))
+  document.removeEventListener('keyup', handleEscapeUp)
+  popup.removeEventListener('mousedown', handleOverlayPopupContent)
 }
 
-/* escape key up with popup handler --------------------------------------------------------*/
+/* escape key up with popup handler ---------------------------------------------------*/
 
-function handleEscapeUp (evt, popup) {
+function handleEscapeUp (evt) {
   evt.preventDefault();
-  if (evt.which === escapeKeyCode) {
-    hidePopup(popup);
+   // if realy ESC
+  if (evt.which === ESCAPE_KEY_CODE) {
+    hidePopup(getOpenPopup());
   }
 }
 
-/*  click overlay popup content handler --------------------------------------------------------*/
+/*  click overlay popup content handler ---------------------------------------------*/
 
-function handleOverlayPopupContent (evt, popup) {
-
-  const evtCurrentTargetClassList = evt.currentTarget.classList.toString();
-  const evtTargetClassList = evt.target.classList.toString();
-
-  if (evtCurrentTargetClassList == evtTargetClassList) {
-    hidePopup(popup);
+function handleOverlayPopupContent (evt) {
+  if (evt.currentTarget === evt.target) {
+    hidePopup(getOpenPopup());
   }
+}
+
+/*  get open popup  --------------------------------------------------------------*/
+
+function    getOpenPopup () {
+  return  popupList.find((p) => {
+    return p.classList.toString().indexOf('popup_hide') == -1
+  })
 }
 
 /* submit event forms handlers ----------------------------------------------------- */
 
-function profileFormHandler(evt) {
+function handleEditProfileFormSubmit(evt) {
   saveEditProfileForm(evt);
   hidePopup(editProfilePopup);
 }
 
-function addCardFormHandler(evt) {
+function handleAddCardFormSubmit(evt) {
   saveAddCardForm(evt);
   hidePopup(addCardPopup);
 }
 
-/* save profile edit / add card  form ----------------------------------------------------------*/
+/* save profile edit / add card  form ---------------------------------------------------*/
 
 function saveEditProfileForm(evt) {
   evt.preventDefault();
@@ -97,12 +104,12 @@ function addOneCard(card) {
 function createCard(card) {
   const newCard = cardTemplate.cloneNode(true);
 
-  newCard
-    .querySelector(".card__remove-btn")
-    .addEventListener("click", (evt) => {
+  const cardRemoveButton = newCard.querySelector(".card__remove-btn");
+  cardRemoveButton.addEventListener("click", (evt) => {
       evt.currentTarget.parentElement.remove();
       evt.currentTarget.parentElement = null;
     });
+
   const newCardImage = newCard.querySelector(".card__image");
   newCardImage.src = card.link;
   newCardImage.alt = card.alt;
@@ -164,7 +171,7 @@ const initialCards = [
 
 /* -----------------------------------------*/
 
-const escapeKeyCode = 27;
+const ESCAPE_KEY_CODE = 27;
 
 // profile
 // -- buttons
@@ -179,33 +186,40 @@ const cardsContainer = document.querySelector(".cards__container");
 const cardTemplate = document.querySelector(".card-template").content;
 
 // popups
+const popupList = [...document.querySelectorAll(".popup")];
 const editProfilePopup = document.querySelector(".popup_type_profile-edit");
 const addCardPopup = document.querySelector(".popup_type_add-card");
 const imagePopup = document.querySelector(".popup_type_image");
-
-// -- buttons
-const editProfilePopupCloseButton =
-  editProfilePopup.querySelector(".popup__close-btn");
-const addCardPopupCloseButton = addCardPopup.querySelector(".popup__close-btn");
-const imagePopupCloseButton = imagePopup.querySelector(".popup__close-btn");
 
 // forms
 const editProfileForm = editProfilePopup.querySelector(".form");
 const addCardForm = addCardPopup.querySelector(".form");
 
+// -- buttons
+const editProfilePopupCloseButton = editProfilePopup.querySelector(".popup__close-btn");
+const addCardPopupCloseButton = addCardPopup.querySelector(".popup__close-btn");
+const imagePopupCloseButton = imagePopup.querySelector(".popup__close-btn");
+
+const editProfileFormSaveButton = editProfileForm.querySelector(".form__save-btn");
+const addCardFormSaveButton = addCardForm.querySelector(".form__save-btn");
+
 // -- inputs
+const editProfileFormInputList = [...editProfilePopup.querySelectorAll(".form__input")];
 const inputTypeName = editProfileForm.querySelector(".form__input_type_name");
 const inputTypeJob = editProfileForm.querySelector(".form__input_type_job");
-const inputTypeCardTitle = addCardForm.querySelector(
-  ".form__input_type_card-title"
+
+const addCardFormInputList = [...addCardForm.querySelectorAll(".form__input")];
+const inputTypeCardTitle = addCardForm.querySelector(".form__input_type_card-title"
 );
 const inputTypeUrl = addCardForm.querySelector(".form__input_type_url");
 
 // all listeners
 
 editProfileButton.addEventListener("click", () => {
+
   // init profile form
   initEditProfileForm();
+  toggleButtonState(editProfileFormInputList,editProfileFormSaveButton, {inactiveButtonClass:"form__save-btn_inactive"});
   // show popup with form
   showPopup(editProfilePopup);
 });
@@ -213,6 +227,7 @@ editProfileButton.addEventListener("click", () => {
 addCardButton.addEventListener("click", () => {
   // init add-card form
   addCardForm.reset();
+  toggleButtonState(addCardFormInputList,addCardFormSaveButton, {inactiveButtonClass:"form__save-btn_inactive"});
   // show popup with form
   showPopup(addCardPopup);
 });
@@ -225,8 +240,8 @@ addCardPopupCloseButton.addEventListener("click", () =>
 );
 imagePopupCloseButton.addEventListener("click", () => hidePopup(imagePopup));
 
-editProfileForm.addEventListener("submit", profileFormHandler);
-addCardForm.addEventListener("submit", addCardFormHandler);
+editProfileForm.addEventListener("submit", handleEditProfileFormSubmit);
+addCardForm.addEventListener("submit", handleAddCardFormSubmit);
 
 /*------------------------------------------- */
 
