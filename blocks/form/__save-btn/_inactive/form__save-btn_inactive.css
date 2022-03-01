@@ -5,5 +5,5 @@
 }
 
 .form__save-btn_inactive:hover {
-  opacity: 0.2;
+  opacity: 1;
 }

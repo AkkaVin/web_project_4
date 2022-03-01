@@ -107,8 +107,7 @@ function createCard(card) {
   const cardRemoveButton = newCard.querySelector(".card__remove-btn");
   cardRemoveButton.addEventListener("click", (evt) => {
       evt.currentTarget.parentElement.remove();
-      evt.currentTarget.parentElement = null;
-    });
+  });
 
   const newCardImage = newCard.querySelector(".card__image");
   newCardImage.src = card.link;
@@ -120,11 +119,11 @@ function createCard(card) {
     showPopup(imagePopup);
   });
   newCard.querySelector(".card__title").textContent = card.name;
-  newCard
-    .querySelector(".card__like-btn")
-    .addEventListener("click", (evt) =>
+
+  const cardLikeButton = newCard.querySelector(".card__like-btn");
+  cardLikeButton.addEventListener("click", (evt) =>
       evt.currentTarget.classList.toggle("card__like-btn_active")
-    );
+  );
 
   return newCard;
 }
