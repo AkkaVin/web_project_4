@@ -60,7 +60,7 @@ function handleOverlayPopupContent (evt) {
 
 function    getOpenPopup () {
   return  popupList.find((p) => {
-    return p.classList.toString().indexOf('popup_hide') == -1
+    return !p.classList.contains('popup_hide')
   })
 }
 
