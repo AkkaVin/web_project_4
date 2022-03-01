@@ -27,13 +27,13 @@ function initImagePopup(card) {
 /* show / hide  popup ----------------------------------------------------- */
 
 function showPopup(popup) {
-  popup.classList.remove("popup_hide");
+  popup.classList.add("popup_opened");
   document.addEventListener('keyup', handleEscapeUp)
   popup.addEventListener('mousedown', handleOverlayPopupContent)
 }
 
 function hidePopup(popup) {
-  popup.classList.add("popup_hide");
+  popup.classList.remove("popup_opened");
   document.removeEventListener('keyup', handleEscapeUp)
   popup.removeEventListener('mousedown', handleOverlayPopupContent)
 }
@@ -59,9 +59,7 @@ function handleOverlayPopupContent (evt) {
 /*  get open popup  --------------------------------------------------------------*/
 
 function    getOpenPopup () {
-  return  popupList.find((p) => {
-    return !p.classList.contains('popup_hide')
-  })
+  return document.querySelector('.popup_opened')
 }
 
 /* submit event forms handlers ----------------------------------------------------- */
@@ -185,7 +183,6 @@ const cardsContainer = document.querySelector(".cards__container");
 const cardTemplate = document.querySelector(".card-template").content;
 
 // popups
-const popupList = [...document.querySelectorAll(".popup")];
 const editProfilePopup = document.querySelector(".popup_type_profile-edit");
 const addCardPopup = document.querySelector(".popup_type_add-card");
 const imagePopup = document.querySelector(".popup_type_image");
