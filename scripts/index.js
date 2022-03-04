@@ -1,3 +1,15 @@
+import FormValidator from './FormValidator.js';
+
+const validationSettings = {
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__save-btn",
+  inactiveButtonClass: "form__save-btn_inactive",
+  inputErrorClass: "form__input_invalid",
+  errorClass: "form__error_active"
+}
+
+
 import { toggleButtonState } from './validate.js'
 
 /* init ---------------------------------------------------------*/
@@ -240,5 +252,13 @@ editProfileForm.addEventListener("submit", handleEditProfileFormSubmit);
 addCardForm.addEventListener("submit", handleAddCardFormSubmit);
 
 /*------------------------------------------- */
+const editProfileFormValidator = new FormValidator (validationSettings,editProfileForm);
+const addCardFormValidator = new FormValidator (validationSettings,addCardForm)
+
+editProfileFormValidator.enableValidation();
+addCardFormValidator.enableValidation();
+
 
 init();
+
+

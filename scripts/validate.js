@@ -73,7 +73,7 @@ function  enableValidation(settings) {
 }
 
 // switch on validation
-enableValidation(validationSettings);
+// enableValidation(validationSettings);
 
 export {toggleButtonState};
 
