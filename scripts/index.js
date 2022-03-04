@@ -1,16 +1,84 @@
 import FormValidator from './FormValidator.js';
-
-const validationSettings = {
-  formSelector: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__save-btn",
-  inactiveButtonClass: "form__save-btn_inactive",
-  inputErrorClass: "form__input_invalid",
-  errorClass: "form__error_active"
-}
-
+import {validationSettings} from './settings.js'
+import { Cards as initialCards } from './initData.js';
 
 import { toggleButtonState } from './validate.js'
+
+const ESCAPE_KEY_CODE = 27;
+
+// profile
+// -- buttons
+const editProfileButton = document.querySelector(".profile__edit-btn");
+const addCardButton = document.querySelector(".profile__add-card-btn");
+// -- inputs
+const profileName = document.querySelector(".profile__name");
+const profileJob = document.querySelector(".profile__job");
+
+// cards
+const cardsContainer = document.querySelector(".cards__container");
+const cardTemplate = document.querySelector(".card-template").content;
+
+// popups
+const editProfilePopup = document.querySelector(".popup_type_profile-edit");
+const addCardPopup = document.querySelector(".popup_type_add-card");
+const imagePopup = document.querySelector(".popup_type_image");
+
+// forms
+const editProfileForm = editProfilePopup.querySelector(".form");
+const addCardForm = addCardPopup.querySelector(".form");
+
+// validators
+const editProfileFormValidator = new FormValidator (validationSettings,editProfileForm);
+const addCardFormValidator = new FormValidator (validationSettings,addCardForm)
+
+// -- buttons
+const editProfilePopupCloseButton = editProfilePopup.querySelector(".popup__close-btn");
+const addCardPopupCloseButton = addCardPopup.querySelector(".popup__close-btn");
+const imagePopupCloseButton = imagePopup.querySelector(".popup__close-btn");
+
+const editProfileFormSaveButton = editProfileForm.querySelector(".form__save-btn");
+const addCardFormSaveButton = addCardForm.querySelector(".form__save-btn");
+
+// -- inputs
+const editProfileFormInputList = [...editProfilePopup.querySelectorAll(".form__input")];
+const inputTypeName = editProfileForm.querySelector(".form__input_type_name");
+const inputTypeJob = editProfileForm.querySelector(".form__input_type_job");
+
+const addCardFormInputList = [...addCardForm.querySelectorAll(".form__input")];
+const inputTypeCardTitle = addCardForm.querySelector(".form__input_type_card-title"
+);
+const inputTypeUrl = addCardForm.querySelector(".form__input_type_url");
+
+// all listeners
+
+editProfileButton.addEventListener("click", () => {
+
+  // init profile form
+  initEditProfileForm();
+  toggleButtonState(editProfileFormInputList,editProfileFormSaveButton, {inactiveButtonClass:"form__save-btn_inactive"});
+  // show popup with form
+  showPopup(editProfilePopup);
+});
+
+addCardButton.addEventListener("click", () => {
+  // init add-card form
+  addCardForm.reset();
+  toggleButtonState(addCardFormInputList,addCardFormSaveButton, {inactiveButtonClass:"form__save-btn_inactive"});
+  // show popup with form
+  showPopup(addCardPopup);
+});
+
+editProfilePopupCloseButton.addEventListener("click", () =>
+  hidePopup(editProfilePopup)
+);
+addCardPopupCloseButton.addEventListener("click", () =>
+  hidePopup(addCardPopup)
+);
+imagePopupCloseButton.addEventListener("click", () => hidePopup(imagePopup));
+
+editProfileForm.addEventListener("submit", handleEditProfileFormSubmit);
+addCardForm.addEventListener("submit", handleAddCardFormSubmit);
+
 
 /* init ---------------------------------------------------------*/
 
@@ -144,121 +212,11 @@ function renderCard(card) {
 
 /* -----------------------------------------*/
 
-// init data
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
-    alt: "View of the Yosemite Valley with sun-scorched grass in the foreground and high mountains with coniferous forest in the distance.",
-  },
-  {
-    name: "Lake Louise",
-    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
-    alt: "View of Lake Louise in the middle of a valley with a water surface and a reflection of standing mountains in the distance",
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg",
-    alt: "A view of the Bald Mountains from the height of one of the mountains and a view of the house and the forest in the intermontane lowlands",
-  },
-  {
-    name: "Latemar",
-    link: "https://code.s3.yandex.net/web-code/latemar.jpg",
-    alt: "View of the lunar flare on a frozen lake against the background of the starry sky",
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://code.s3.yandex.net/web-code/vanoise.jpg",
-    alt: "A view of a snow-covered path in the middle of Vanoise National Park surrounded by a slightly snow-covered winter mixed forest.",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://code.s3.yandex.net/web-code/lago.jpg",
-    alt: "View of the boats moored at the high pier at Lago di Braies",
-  },
-];
-
-/* -----------------------------------------*/
-
-const ESCAPE_KEY_CODE = 27;
-
-// profile
-// -- buttons
-const editProfileButton = document.querySelector(".profile__edit-btn");
-const addCardButton = document.querySelector(".profile__add-card-btn");
-// -- inputs
-const profileName = document.querySelector(".profile__name");
-const profileJob = document.querySelector(".profile__job");
-
-// cards
-const cardsContainer = document.querySelector(".cards__container");
-const cardTemplate = document.querySelector(".card-template").content;
-
-// popups
-const editProfilePopup = document.querySelector(".popup_type_profile-edit");
-const addCardPopup = document.querySelector(".popup_type_add-card");
-const imagePopup = document.querySelector(".popup_type_image");
-
-// forms
-const editProfileForm = editProfilePopup.querySelector(".form");
-const addCardForm = addCardPopup.querySelector(".form");
-
-// -- buttons
-const editProfilePopupCloseButton = editProfilePopup.querySelector(".popup__close-btn");
-const addCardPopupCloseButton = addCardPopup.querySelector(".popup__close-btn");
-const imagePopupCloseButton = imagePopup.querySelector(".popup__close-btn");
-
-const editProfileFormSaveButton = editProfileForm.querySelector(".form__save-btn");
-const addCardFormSaveButton = addCardForm.querySelector(".form__save-btn");
-
-// -- inputs
-const editProfileFormInputList = [...editProfilePopup.querySelectorAll(".form__input")];
-const inputTypeName = editProfileForm.querySelector(".form__input_type_name");
-const inputTypeJob = editProfileForm.querySelector(".form__input_type_job");
-
-const addCardFormInputList = [...addCardForm.querySelectorAll(".form__input")];
-const inputTypeCardTitle = addCardForm.querySelector(".form__input_type_card-title"
-);
-const inputTypeUrl = addCardForm.querySelector(".form__input_type_url");
-
-// all listeners
-
-editProfileButton.addEventListener("click", () => {
-
-  // init profile form
-  initEditProfileForm();
-  toggleButtonState(editProfileFormInputList,editProfileFormSaveButton, {inactiveButtonClass:"form__save-btn_inactive"});
-  // show popup with form
-  showPopup(editProfilePopup);
-});
-
-addCardButton.addEventListener("click", () => {
-  // init add-card form
-  addCardForm.reset();
-  toggleButtonState(addCardFormInputList,addCardFormSaveButton, {inactiveButtonClass:"form__save-btn_inactive"});
-  // show popup with form
-  showPopup(addCardPopup);
-});
-
-editProfilePopupCloseButton.addEventListener("click", () =>
-  hidePopup(editProfilePopup)
-);
-addCardPopupCloseButton.addEventListener("click", () =>
-  hidePopup(addCardPopup)
-);
-imagePopupCloseButton.addEventListener("click", () => hidePopup(imagePopup));
-
-editProfileForm.addEventListener("submit", handleEditProfileFormSubmit);
-addCardForm.addEventListener("submit", handleAddCardFormSubmit);
-
-/*------------------------------------------- */
-const editProfileFormValidator = new FormValidator (validationSettings,editProfileForm);
-const addCardFormValidator = new FormValidator (validationSettings,addCardForm)
+init();
 
 editProfileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 
 
-init();
 
 
