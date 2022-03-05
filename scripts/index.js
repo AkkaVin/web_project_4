@@ -1,10 +1,10 @@
 import FormValidator from './FormValidator.js';
+import { Card } from './Card.js';
 import {validationSettings} from './settings.js'
 import { Cards as initialCards } from './initData.js';
+import { imagePopup, showPopup, hidePopup } from "./utils.js";
 
 import { toggleButtonState } from './validate.js'
-
-const ESCAPE_KEY_CODE = 27;
 
 // profile
 // -- buttons
@@ -16,12 +16,12 @@ const profileJob = document.querySelector(".profile__job");
 
 // cards
 const cardsContainer = document.querySelector(".cards__container");
-const cardTemplate = document.querySelector(".card-template").content;
+const cardTemplateSelector = ".card-template";
 
 // popups
 const editProfilePopup = document.querySelector(".popup_type_profile-edit");
 const addCardPopup = document.querySelector(".popup_type_add-card");
-const imagePopup = document.querySelector(".popup_type_image");
+// imagePopup imported from utils
 
 // forms
 const editProfileForm = editProfilePopup.querySelector(".form");
@@ -95,53 +95,6 @@ function initEditProfileForm() {
   inputTypeJob.value = profileJob.textContent;
 }
 
-function initImagePopup(card) {
-  const popupImage = imagePopup.querySelector(".popup__image");
-  const popupImageTitle = imagePopup.querySelector(".popup__image-title");
-
-  popupImage.src = card.link;
-  popupImage.alt = card.alt;
-  popupImageTitle.textContent = card.name;
-}
-
-/* show / hide  popup ----------------------------------------------------- */
-
-function showPopup(popup) {
-  popup.classList.add("popup_opened");
-  document.addEventListener('keyup', handleEscapeUp)
-  popup.addEventListener('mousedown', handleOverlayPopupContent)
-}
-
-function hidePopup(popup) {
-  popup.classList.remove("popup_opened");
-  document.removeEventListener('keyup', handleEscapeUp)
-  popup.removeEventListener('mousedown', handleOverlayPopupContent)
-}
-
-/* escape key up with popup handler ---------------------------------------------------*/
-
-function handleEscapeUp (evt) {
-  evt.preventDefault();
-   // if realy ESC
-  if (evt.which === ESCAPE_KEY_CODE) {
-    hidePopup(getOpenPopup());
-  }
-}
-
-/*  click overlay popup content handler ---------------------------------------------*/
-
-function handleOverlayPopupContent (evt) {
-  if (evt.currentTarget === evt.target) {
-    hidePopup(getOpenPopup());
-  }
-}
-
-/*  get open popup  --------------------------------------------------------------*/
-
-function    getOpenPopup () {
-  return document.querySelector('.popup_opened')
-}
-
 /* submit event forms handlers ----------------------------------------------------- */
 
 function handleEditProfileFormSubmit(evt) {
@@ -175,35 +128,8 @@ function saveAddCardForm(evt) {
 /* --cards-------------------------------------------------------------------*/
 
 function addOneCard(card) {
-  const newCard = createCard(card);
-  renderCard(newCard);
-}
-
-function createCard(card) {
-  const newCard = cardTemplate.cloneNode(true);
-
-  const cardRemoveButton = newCard.querySelector(".card__remove-btn");
-  cardRemoveButton.addEventListener("click", (evt) => {
-      evt.currentTarget.parentElement.remove();
-  });
-
-  const newCardImage = newCard.querySelector(".card__image");
-  newCardImage.src = card.link;
-  newCardImage.alt = card.alt;
-  newCardImage.addEventListener("click", (evt) => {
-    // init image
-    initImagePopup(card);
-    //show image popup
-    showPopup(imagePopup);
-  });
-  newCard.querySelector(".card__title").textContent = card.name;
-
-  const cardLikeButton = newCard.querySelector(".card__like-btn");
-  cardLikeButton.addEventListener("click", (evt) =>
-      evt.currentTarget.classList.toggle("card__like-btn_active")
-  );
-
-  return newCard;
+  const newCard = new Card(card, cardTemplateSelector)
+  renderCard(newCard.getCardElement());
 }
 
 function renderCard(card) {
