@@ -4,8 +4,6 @@ import {validationSettings} from './settings.js'
 import { Cards as initialCards } from './initData.js';
 import { imagePopup, showPopup, hidePopup } from "./utils.js";
 
-import { toggleButtonState } from './validate.js'
-
 // profile
 // -- buttons
 const editProfileButton = document.querySelector(".profile__edit-btn");
@@ -36,15 +34,12 @@ const editProfilePopupCloseButton = editProfilePopup.querySelector(".popup__clos
 const addCardPopupCloseButton = addCardPopup.querySelector(".popup__close-btn");
 const imagePopupCloseButton = imagePopup.querySelector(".popup__close-btn");
 
-const editProfileFormSaveButton = editProfileForm.querySelector(".form__save-btn");
-const addCardFormSaveButton = addCardForm.querySelector(".form__save-btn");
-
 // -- inputs
-const editProfileFormInputList = [...editProfilePopup.querySelectorAll(".form__input")];
+
 const inputTypeName = editProfileForm.querySelector(".form__input_type_name");
 const inputTypeJob = editProfileForm.querySelector(".form__input_type_job");
 
-const addCardFormInputList = [...addCardForm.querySelectorAll(".form__input")];
+
 const inputTypeCardTitle = addCardForm.querySelector(".form__input_type_card-title"
 );
 const inputTypeUrl = addCardForm.querySelector(".form__input_type_url");
@@ -55,7 +50,8 @@ editProfileButton.addEventListener("click", () => {
 
   // init profile form
   initEditProfileForm();
-  toggleButtonState(editProfileFormInputList,editProfileFormSaveButton, {inactiveButtonClass:"form__save-btn_inactive"});
+  // reset validation
+  editProfileFormValidator.resetValidation();
   // show popup with form
   showPopup(editProfilePopup);
 });
@@ -63,7 +59,8 @@ editProfileButton.addEventListener("click", () => {
 addCardButton.addEventListener("click", () => {
   // init add-card form
   addCardForm.reset();
-  toggleButtonState(addCardFormInputList,addCardFormSaveButton, {inactiveButtonClass:"form__save-btn_inactive"});
+  // reset validation
+  addCardFormValidator.resetValidation();
   // show popup with form
   showPopup(addCardPopup);
 });

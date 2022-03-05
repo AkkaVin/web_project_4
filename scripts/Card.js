@@ -24,7 +24,7 @@ export class Card {
       showPopup(imagePopup);
   }
 
-  _setEventListeners () {
+  _setEventListeners = () => {
     const cardRemoveButton = this._newCard.querySelector(".card__remove-btn");
     const cardLikeButton = this._newCard.querySelector(".card__like-btn");
     const newCardImage = this._newCard.querySelector(".card__image");
