@@ -2,7 +2,8 @@ import FormValidator from './FormValidator.js';
 import { Card } from './Card.js';
 import {validationSettings} from './settings.js'
 import { Cards as initialCards } from './initData.js';
-import { imagePopup, showPopup, hidePopup } from "./utils.js";
+import { showPopup, hidePopup } from "./utils.js";
+
 
 // profile
 // -- buttons
@@ -19,7 +20,7 @@ const cardTemplateSelector = ".card-template";
 // popups
 const editProfilePopup = document.querySelector(".popup_type_profile-edit");
 const addCardPopup = document.querySelector(".popup_type_add-card");
-// imagePopup imported from utils
+export const imagePopup = document.querySelector(".popup_type_image");
 
 // forms
 const editProfileForm = editProfilePopup.querySelector(".form");
@@ -128,11 +129,19 @@ function addOneCard(card) {
   const newCard = new Card(card, cardTemplateSelector)
   renderCard(newCard.getCardElement());
 }
-
+// add new one card to markup
 function renderCard(card) {
   cardsContainer.prepend(card);
 }
+// init previewImage
+export function initImagePopup (card)  {
+  const popupImage = imagePopup.querySelector(".popup__image");
+  const popupImageTitle = imagePopup.querySelector(".popup__image-title");
 
+  popupImage.src = card.link;
+  popupImage.alt = card.alt;
+  popupImageTitle.textContent = card.name;
+}
 /* -----------------------------------------*/
 
 init();

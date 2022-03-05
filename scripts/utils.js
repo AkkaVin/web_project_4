@@ -1,16 +1,4 @@
-export const imagePopup = document.querySelector(".popup_type_image");
-
 const ESCAPE_KEY_CODE = 27;
-
-
-export function initImagePopup (card)  {
-  const popupImage = imagePopup.querySelector(".popup__image");
-  const popupImageTitle = imagePopup.querySelector(".popup__image-title");
-
-  popupImage.src = card.link;
-  popupImage.alt = card.alt;
-  popupImageTitle.textContent = card.name;
-}
 
 /* show / hide  popup ----------------------------------------------------- */
 export function showPopup(popup) {
