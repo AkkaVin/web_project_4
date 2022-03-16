@@ -1,3 +1,4 @@
+import "../pages/index.css"; // add import of the main stylesheets file
 import FormValidator from './FormValidator.js';
 import { Card } from './Card.js';
 import {validationSettings} from './settings.js'
