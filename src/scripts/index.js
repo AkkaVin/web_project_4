@@ -1,7 +1,11 @@
 import "../pages/index.css"; // add import of the main stylesheets file
 import FormValidator from './FormValidator.js';
 import { Card } from './Card.js';
-import {validationSettings} from './settings.js'
+import { UserInfo } from "./UserInfo";
+import { Section } from "./Section.js"
+import { PopupWithImage } from './PopupWithImage';
+import { PopupWithForm } from "./PopupWithForm";
+import { validationSettings } from './settings.js';
 import { Cards as initialCards } from './initData.js';
 import { showPopup, hidePopup } from "./utils.js";
 
@@ -10,18 +14,41 @@ import { showPopup, hidePopup } from "./utils.js";
 // -- buttons
 const editProfileButton = document.querySelector(".profile__edit-btn");
 const addCardButton = document.querySelector(".profile__add-card-btn");
+
 // -- inputs
-const profileName = document.querySelector(".profile__name");
-const profileJob = document.querySelector(".profile__job");
+const profileNameSelector = ".profile__name";
+const profileJobSelector = ".profile__job";
+
+const profileName = document.querySelector(profileNameSelector);
+const profileJob = document.querySelector(profileJobSelector);
+
+const userProfile = new UserInfo ({
+  userNameSelector: profileNameSelector,
+  userJobSelector:  profileJobSelector
+});
+
+console.log(userProfile)
+console.log(userProfile.getUserInfo())
+
 
 // cards
 const cardsContainer = document.querySelector(".cards__container");
 const cardTemplateSelector = ".card-template";
 
 // popups
-const editProfilePopup = document.querySelector(".popup_type_profile-edit");
-const addCardPopup = document.querySelector(".popup_type_add-card");
-export const imagePopup = document.querySelector(".popup_type_image");
+
+const editProfilePopupSelector = ".popup_type_profile-edit";
+const addCardPopupSelector = ".popup_type_add-card";
+const imagePopupSelector = ".popup_type_image";
+
+const editProfilePopup = document.querySelector(editProfilePopupSelector);
+const addCardPopup = document.querySelector(addCardPopupSelector);
+const imagePopup = document.querySelector(imagePopupSelector);
+
+const imagePopupInstance = new PopupWithImage (imagePopupSelector);
+const editProfilePopupInstance = new PopupWithForm (editProfilePopupSelector, () => {});
+// const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, () => {});
+
 
 // forms
 const editProfileForm = editProfilePopup.querySelector(".form");
@@ -48,15 +75,26 @@ const inputTypeUrl = addCardForm.querySelector(".form__input_type_url");
 
 // all listeners
 
-editProfileButton.addEventListener("click", () => {
-
-  // init profile form
-  initEditProfileForm();
-  // reset validation
-  editProfileFormValidator.resetValidation();
-  // show popup with form
-  showPopup(editProfilePopup);
+userProfile.setUserInfo({
+ // userName: "12341",
+  userName: inputTypeName.value,
+  // userJob:  "423423"
+  userJob:  inputTypeJob.value
 });
+
+console.log(userProfile.getUserInfo())
+
+
+
+// editProfileButton.addEventListener("click", () => {
+
+//   // init profile form
+//   initEditProfileForm();
+//   // reset validation
+//   editProfileFormValidator.resetValidation();
+//   // show popup with form
+//   showPopup(editProfilePopup);
+// });
 
 addCardButton.addEventListener("click", () => {
   // init add-card form
@@ -127,29 +165,26 @@ function saveAddCardForm(evt) {
 /* --cards-------------------------------------------------------------------*/
 
 function addOneCard(card) {
-  const newCard = new Card(card, cardTemplateSelector)
+  const newCard = new Card(card, cardTemplateSelector, () => {
+    const { src, text, alt } = card;
+    imagePopupInstance.open(src, text, alt);  //src, text, alt
+  })
   renderCard(newCard.getCardElement());
 }
 // add new one card to markup
 function renderCard(card) {
   cardsContainer.prepend(card);
 }
-// init previewImage
-export function initImagePopup (card)  {
-  const popupImage = imagePopup.querySelector(".popup__image");
-  const popupImageTitle = imagePopup.querySelector(".popup__image-title");
-
-  popupImage.src = card.link;
-  popupImage.alt = card.alt;
-  popupImageTitle.textContent = card.name;
-}
 /* -----------------------------------------*/
 
-init();
+// init();
 
 editProfileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 
+// imagePopupInstance.setEventListeners();
+// addCardPopupInstance.setEventListeners();
+editProfilePopupInstance.setEventListeners();
 
 
 

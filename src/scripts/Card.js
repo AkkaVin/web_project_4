@@ -1,13 +1,14 @@
 import {  showPopup } from "./utils.js";
-import { imagePopup, initImagePopup } from "./index.js";
+// import { imagePopup, initImagePopup } from "./index.js";
 
 export class Card {
-  constructor ( {name, link, alt}, templateCardSelector){
+  constructor ( {name, link, alt}, templateCardSelector, handleCardClick){
     this._name = name;
     this._link = link;
     this._alt = alt;
     this._templateCardSelector = templateCardSelector;
     this._cardTemplate = document.querySelector(this._templateCardSelector).content;
+    this._handleCardClick = handleCardClick;
   }
 
   _handleRemoveButton = (evt) => {
@@ -18,20 +19,20 @@ export class Card {
     evt.currentTarget.classList.toggle("card__like-btn_active")
   }
 
-  _handleImagePreview = (evt) => {
-      // init image
-      initImagePopup({name:this._name, link:this._link, alt:this._alt});
-      //show image popup
-      showPopup(imagePopup);
-  }
+  // _handleImagePreview = (evt) => {
+  //     // init image
+  //     initImagePopup({name:this._name, link:this._link, alt:this._alt});
+  //     //show image popup
+  //     showPopup(imagePopup);
+  // }
 
-  _setEventListeners = () => {
+   _setEventListeners = () => {
     const cardRemoveButton = this._newCard.querySelector(".card__remove-btn");
     const cardLikeButton = this._newCard.querySelector(".card__like-btn");
     const newCardImage = this._newCard.querySelector(".card__image");
 
     cardRemoveButton.addEventListener("click", this._handleRemoveButton);
-    newCardImage.addEventListener("click", this._handleImagePreview);
+    newCardImage.addEventListener("click", this._handleCardClick);
     cardLikeButton.addEventListener("click", this._handleLikeButton);
   }
 
