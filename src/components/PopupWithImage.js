@@ -5,7 +5,7 @@ export class PopupWithImage extends Popup {
     super(popupSelector);
   }
 
-  open = (src, text, alt)   => {
+  open (src, text, alt) {
     const popupImage = this._popupElement.querySelector(".popup__image");
     const popupImageTitle = this._popupElement.querySelector(".popup__image-title");
 

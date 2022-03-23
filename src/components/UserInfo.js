@@ -7,16 +7,16 @@ export class UserInfo {
     this._userJobElement = document.querySelector(this._userJobSelector);
   }
 
-  getUserInfo = () => {
+  getUserInfo () {
     return {
-      "userName": this._userNameElement.innerText, //this._userNameElement.value,
-      "userJob": this._userJobElement.innerText //this._userJobElement.value
+      "userName": this._userNameElement.textContent,
+      "userJob": this._userJobElement.textContent
     }
   }
 
-  setUserInfo = ({ userName, userJob}) => {
-    this._userNameElement.innerText = userName;
-    this._userJobElement.innerText = userJob;
+  setUserInfo ({ userName, userJob}) {
+    this._userNameElement.textContent = userName;
+    this._userJobElement.textContent = userJob;
   }
 }
 
