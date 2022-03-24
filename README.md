@@ -1,4 +1,4 @@
-# Projects 4-7: Around The U.S.
+# Projects 4-8: Around The U.S.
 
 ### Around The U.S. at Yandex Practicum
 
@@ -17,6 +17,7 @@
 * JavaScript
 * BEM
 * OOP
+* Webpack
 
 **Links**
 

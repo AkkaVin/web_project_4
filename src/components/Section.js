@@ -1,6 +1,5 @@
 export class Section {
   constructor ({items, renderer}, elementContainerSelector)  {
-// debugger
     this._items = items;
     this._renderer = renderer;
     this._elementContainer = document.querySelector(elementContainerSelector);
@@ -11,11 +10,9 @@ export class Section {
   }
 
   renderItems(){
-  // debugger
     this._clearContainer();
 
     this._items.forEach ( item => {
-  // debugger
       this._renderer(item)
     })
   }
