@@ -1,10 +1,11 @@
 import "../pages/index.css"; // add import of the main stylesheets file
-import FormValidator from '../components/FormValidator.js';
-import { Card } from '../components/Card.js';
-import { UserInfo } from "../components/UserInfo";
-import { Section } from "../components/Section.js"
+import { enableFormsValidation,
+         formValidators } from '../components/FormValidator.js';
+import { Card }           from '../components/Card.js';
+import { UserInfo }       from "../components/UserInfo";
+import { Section }        from "../components/Section.js"
 import { PopupWithImage } from '../components/PopupWithImage';
-import { PopupWithForm } from "../components/PopupWithForm";
+import { PopupWithForm }  from "../components/PopupWithForm";
 import { Cards as initialCards } from '../utils/initData.js';
 import { validationSettings,
          editProfileButtonSelector,
@@ -15,7 +16,7 @@ import { validationSettings,
          cardTemplateSelector,
          editProfilePopupSelector,
          addCardPopupSelector,
-         imagePopupSelector  } from '../utils/settings.js';
+         imagePopupSelector  }  from '../utils/settings.js';
 
 //page
 //-- buttons
@@ -28,27 +29,25 @@ const cardsContainer = document.querySelector(cardsContainerSelector);
 //-- popups
 const editProfilePopup = document.querySelector(editProfilePopupSelector);
 const addCardPopup = document.querySelector(addCardPopupSelector);
-//-- forms
-const editProfileForm = editProfilePopup.querySelector(".form");
-const addCardForm = addCardPopup.querySelector(".form");
+//-- forms names
+const editProfileFormName = editProfilePopup
+  .querySelector(validationSettings.formSelector)
+  .getAttribute('name');
+const addCardFormName = addCardPopup
+  .querySelector(validationSettings.formSelector)
+  .getAttribute('name');
+
 
 //------- init ------
 
-// validators
-const editProfileFormValidator = new FormValidator (validationSettings,editProfileForm);
-const addCardFormValidator = new FormValidator (validationSettings,addCardForm)
-
-// switch on validation
-editProfileFormValidator.enableValidation();
-addCardFormValidator.enableValidation();
-
+// enable validation
+enableFormsValidation(validationSettings);
 
 //profile
 const userProfile = new UserInfo ({
   userNameSelector: profileNameSelector,
   userJobSelector:  profileJobSelector
 });
-
 
 //-- popup instances
 const imagePopupInstance = new PopupWithImage (imagePopupSelector);
@@ -75,17 +74,18 @@ const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => 
   addCardPopupInstance.close();
 })
 
-const CardList = new Section({
+// card list
+const cardList = new Section({
   items: initialCards,
   renderer: (newCardData) => {
     const newCardInstance = getNewCardInstance (newCardData);
     const newCardElement = newCardInstance.getCardElement();
 
-    CardList.addItem(newCardElement);
+    cardList.addItem(newCardElement);
   }
 }, cardsContainerSelector);
 
-CardList.renderItems();
+cardList.renderItems();
 
 // all listeners
 
@@ -97,7 +97,7 @@ editProfileButton.addEventListener("click", () => {
   // init editProfile form
   initEditProfileForm();
   // reset validation
-  editProfileFormValidator.resetValidation();
+  formValidators[editProfileFormName].resetValidation();
   // show popup with form
   editProfilePopupInstance.open();
 });
@@ -106,7 +106,7 @@ addCardButton.addEventListener("click", () => {
   // init add-card form
   // empty
   // reset validation
-  addCardFormValidator.resetValidation();
+  formValidators[addCardFormName].resetValidation();
   // show popup with form
   addCardPopupInstance.open()
 });
@@ -131,3 +131,4 @@ function getNewCardInstance (newCardData) {
       });
     })
 }
+

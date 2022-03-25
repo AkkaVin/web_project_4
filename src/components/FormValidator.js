@@ -67,4 +67,19 @@ class FormValidator {
   }
 }
 
-export default FormValidator
+const formValidators = {};
+
+// enable list of validators
+const enableFormsValidation = (settings) => {
+  const formList = Array.from(document.querySelectorAll(settings.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(settings, formElement);
+    // get the name of the form
+    const formName = formElement.getAttribute('name');
+    // store a validator by the `name` of the form
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+export {FormValidator, enableFormsValidation, formValidators}
