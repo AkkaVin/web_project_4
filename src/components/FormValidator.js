@@ -82,4 +82,4 @@ const enableFormsValidation = (settings) => {
   });
 };
 
-export {FormValidator, enableFormsValidation, formValidators}
+export {enableFormsValidation, formValidators}
