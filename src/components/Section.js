@@ -13,7 +13,6 @@ export class Section {
     this._clearContainer();
 
     this._items.forEach ( item => {
-      this._renderer(item)
       this.addItem(item)
     })
   }
