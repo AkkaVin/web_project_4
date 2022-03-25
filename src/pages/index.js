@@ -1,6 +1,5 @@
 import "../pages/index.css"; // add import of the main stylesheets file
-import { enableFormsValidation,
-         formValidators } from '../components/FormValidator.js';
+import { FormValidator}   from '../components/FormValidator.js';
 import { Card }           from '../components/Card.js';
 import { UserInfo }       from "../components/UserInfo";
 import { Section }        from "../components/Section.js"
@@ -22,8 +21,6 @@ import { validationSettings,
 //-- buttons
 const editProfileButton = document.querySelector(editProfileButtonSelector);
 const addCardButton = document.querySelector(addCardButtonSelector);
-//-- cards
-const cardsContainer = document.querySelector(cardsContainerSelector);
 
 //popups
 //-- popups
@@ -39,6 +36,21 @@ const addCardFormName = addCardPopup
 
 
 //------- init ------
+
+const formValidators = {};
+
+// enable list of validators
+const enableFormsValidation = (settings) => {
+  const formList = Array.from(document.querySelectorAll(settings.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(settings, formElement);
+    // get the name of the form
+    const formName = formElement.getAttribute('name');
+    // store a validator by the `name` of the form
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
 
 // enable validation
 enableFormsValidation(validationSettings);
@@ -58,7 +70,6 @@ const cardList = new Section({
 }, cardsContainerSelector);
 
 cardList.renderItems();
-
 
 //-- popup instances
 const imagePopupInstance = new PopupWithImage (imagePopupSelector);
@@ -80,7 +91,6 @@ const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => 
   cardList.addItem(newCardData)
   addCardPopupInstance.close();
 })
-
 
 // all listeners
 
