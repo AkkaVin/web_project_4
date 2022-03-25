@@ -49,6 +49,18 @@ const userProfile = new UserInfo ({
   userJobSelector:  profileJobSelector
 });
 
+// card list
+const cardList = new Section({
+  items: initialCards,
+  renderer: (newCardData) => {
+    const newCardInstance = getNewCardInstance (newCardData);
+    return newCardInstance.getCardElement();
+  }
+}, cardsContainerSelector);
+
+cardList.renderItems();
+
+
 //-- popup instances
 const imagePopupInstance = new PopupWithImage (imagePopupSelector);
 
@@ -66,26 +78,10 @@ const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => 
     link: data.url,
     alt: data.cardTitle,
   };
-  const newCardInstance = getNewCardInstance (newCardData);
-  const newCardElement = newCardInstance.getCardElement();
-
-  cardsContainer.prepend(newCardElement);
-
+  cardList.addItem(newCardData)
   addCardPopupInstance.close();
 })
 
-// card list
-const cardList = new Section({
-  items: initialCards,
-  renderer: (newCardData) => {
-    const newCardInstance = getNewCardInstance (newCardData);
-    const newCardElement = newCardInstance.getCardElement();
-
-    cardList.addItem(newCardElement);
-  }
-}, cardsContainerSelector);
-
-cardList.renderItems();
 
 // all listeners
 
