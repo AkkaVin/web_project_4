@@ -53,8 +53,7 @@ const userProfile = new UserInfo ({
 const cardList = new Section({
   items: initialCards,
   renderer: (newCardData) => {
-    const newCardInstance = getNewCardInstance (newCardData);
-    return newCardInstance.getCardElement();
+    return getNewCardInstance (newCardData).getCardElement()
   }
 }, cardsContainerSelector);
 
