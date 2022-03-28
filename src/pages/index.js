@@ -16,6 +16,26 @@ import { validationSettings,
          editProfilePopupSelector,
          addCardPopupSelector,
          imagePopupSelector  }  from '../utils/settings.js';
+import { api } from "../components/Api.js";
+
+api.getInitialCards()
+  .then ( res => {
+    cardList.renderItems(res);
+    console.log('res',res)
+    // TODO check alt tag!!!
+  })
+
+api.getUserInfo()
+  .then ( res => {
+    userProfile.setUserInfo({
+      userName: res.name,
+      userJob: res.about
+    })
+    console.log('res',res)
+})
+
+
+
 
 //page
 //-- buttons
@@ -61,15 +81,17 @@ const userProfile = new UserInfo ({
   userJobSelector:  profileJobSelector
 });
 
+
 // card list
 const cardList = new Section({
-  items: initialCards,
+  // items: initialCards,
+  items: [],
   renderer: (newCardData) => {
     return getNewCardInstance (newCardData).getCardElement()
   }
 }, cardsContainerSelector);
 
-cardList.renderItems();
+// cardList.renderItems(initialCards);
 
 //-- popup instances
 const imagePopupInstance = new PopupWithImage (imagePopupSelector);
@@ -136,4 +158,5 @@ function getNewCardInstance (newCardData) {
       });
     })
 }
+
 

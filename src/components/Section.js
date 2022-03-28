@@ -9,11 +9,12 @@ export class Section {
     this._elementContainer.innerHTML = "";
   }
 
-  renderItems(){
+  renderItems(items){
     this._clearContainer();
+    this._items = items;
 
     this._items.forEach ( item => {
-      this.addItem(item)
+        this.addItem(item)
     })
   }
 
