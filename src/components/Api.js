@@ -22,6 +22,13 @@ class Api {
     })
   }
 
+  createCard(data) {
+    return this._customFetch (`${this._baseUrl}/cards`, {
+      headers: this._headers,
+      method: 'POST',
+      body: JSON.stringify(data)
+    })
+  }
 
 
   // other methods for working with the API

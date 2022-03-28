@@ -21,7 +21,7 @@ import { api } from "../components/Api.js";
 api.getInitialCards()
   .then ( res => {
     cardList.renderItems(res);
-    console.log('res',res)
+    // console.log('res',res)
     // TODO check alt tag!!!
   })
 
@@ -31,7 +31,7 @@ api.getUserInfo()
       userName: res.name,
       userJob: res.about
     })
-    console.log('res',res)
+    // console.log('res',res)
 })
 
 
@@ -86,8 +86,8 @@ const userProfile = new UserInfo ({
 const cardList = new Section({
   // items: initialCards,
   items: [],
-  renderer: (newCardData) => {
-    return getNewCardInstance (newCardData).getCardElement()
+  renderer: (cardData) => {
+    return getNewCardInstance (cardData).getCardElement()
   }
 }, cardsContainerSelector);
 
@@ -105,13 +105,20 @@ const editProfilePopupInstance = new PopupWithForm (editProfilePopupSelector, (d
 });
 
 const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => {
-  const newCardData = {
+  // console.log(data)
+  api.createCard({
     name: data.cardTitle,
-    link: data.url,
-    alt: data.cardTitle,
-  };
-  cardList.addItem(newCardData)
-  addCardPopupInstance.close();
+    link: data.url
+  })
+    .then( res => {
+      const newCardData = {
+        name: res.name,
+        link: res.link,
+        alt: res.name,
+      }
+      cardList.addItem(newCardData)
+      addCardPopupInstance.close();
+  })
 })
 
 // all listeners
@@ -149,12 +156,12 @@ function initEditProfileForm() {
 }
 
 // get new card instance
-function getNewCardInstance (newCardData) {
-    return new Card(newCardData, cardTemplateSelector, () => {
+function getNewCardInstance (data) {
+    return new Card(data, cardTemplateSelector, () => {
       imagePopupInstance.open({
-        'text': newCardData.name,
-        'src': newCardData.link,
-        'alt': newCardData.alt,
+        'text': data.name,
+        'src': data.link,
+        'alt': data.alt,
       });
     })
 }
