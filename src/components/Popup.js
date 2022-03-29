@@ -2,6 +2,7 @@ const ESCAPE_KEY_CODE = 27;
 
 export class Popup {
   constructor (popupSelector) {
+    // debugger
     this._popupElement = document.querySelector(popupSelector);
     this._handleEscClose = this._handleEscClose.bind(this)
     this._handleOverlayPopupContent = this._handleOverlayPopupContent.bind(this)

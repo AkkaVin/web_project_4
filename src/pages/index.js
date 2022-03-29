@@ -5,6 +5,7 @@ import { UserInfo }       from "../components/UserInfo";
 import { Section }        from "../components/Section.js"
 import { PopupWithImage } from '../components/PopupWithImage';
 import { PopupWithForm }  from "../components/PopupWithForm";
+import { PopupWithSubmit } from "../components/popupWithSubmit";
 import { Cards as initialCards } from '../utils/initData.js';
 import { validationSettings,
          editProfileButtonSelector,
@@ -15,25 +16,40 @@ import { validationSettings,
          cardTemplateSelector,
          editProfilePopupSelector,
          addCardPopupSelector,
-         imagePopupSelector  }  from '../utils/settings.js';
+         imagePopupSelector,
+         deleteCardPopupSelector  }  from '../utils/settings.js';
 import { api } from "../components/Api.js";
 
-api.getInitialCards()
-  .then ( res => {
-    cardList.renderItems(res);
-    // console.log('res',res)
-    // TODO check alt tag!!!
-  })
+// api.getInitialCards()
+//   .then ( res => {
+//     cardList.renderItems(res);
+//     // console.log('res',res)
+//     // TODO check alt tag!!!
+//   })
 
-api.getUserInfo()
-  .then ( res => {
+// api.getUserInfo()
+//   .then ( res => {
+//     userProfile.setUserInfo({
+//       userName: res.name,
+//       userJob: res.about
+//     })
+//     // console.log('res',res)
+// })
+
+let userId;
+//  TODO incapsulate into userInfo => cause not changed
+
+Promise.all([api.getInitialCards(), api.getUserInfo()])
+  .then(([cardInitlData, userInfo]) => {
+    console.log(cardInitlData)
+    cardList.renderItems(cardInitlData);
     userProfile.setUserInfo({
-      userName: res.name,
-      userJob: res.about
+      userName: userInfo.name,
+      userJob: userInfo.about
     })
-    // console.log('res',res)
+    userId = userInfo._id;
+    console.log(userId)
 })
-
 
 
 
@@ -104,6 +120,8 @@ const editProfilePopupInstance = new PopupWithForm (editProfilePopupSelector, (d
    editProfilePopupInstance.close();
 });
 
+const deleteCardPopup = new PopupWithSubmit (deleteCardPopupSelector);
+
 const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => {
   // console.log(data)
   api.createCard({
@@ -125,7 +143,8 @@ const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => 
 
 editProfilePopupInstance.setEventListeners();
 imagePopupInstance.setEventListeners();
-addCardPopupInstance.setEventListeners()
+addCardPopupInstance.setEventListeners();
+deleteCardPopup.setEventListeners();
 
 editProfileButton.addEventListener("click", () => {
   // init editProfile form
@@ -157,13 +176,29 @@ function initEditProfileForm() {
 
 // get new card instance
 function getNewCardInstance (data) {
-    return new Card(data, cardTemplateSelector, () => {
-      imagePopupInstance.open({
+    const card = new Card(data, cardTemplateSelector, {
+      handleCardClick: () => {
+        imagePopupInstance.open({
         'text': data.name,
         'src': data.link,
         'alt': data.alt,
-      });
-    })
+        });
+      },
+      handleRemoveButtonClick: (id) => {
+        // open popup and wait for confirmation
+        deleteCardPopup.open();
+        // if confirmed  - delete from server
+        deleteCardPopup.setAction(() => {
+          api.deleteCard(id)
+          .then ( res => {
+            // console.log(res.ok)
+            card.removeCard();
+            deleteCardPopup.close();
+          })
+        })
+      }
+    }, userId)
+    return card;
 }
 
 

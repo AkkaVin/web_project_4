@@ -1,14 +1,19 @@
 
 export class Card {
-  constructor ( {name, link, alt}, templateCardSelector, handleCardClick){
+  constructor ( {name, link, alt, _id}, templateCardSelector,{ handleCardClick , handleRemoveButtonClick, userId}){
     // data
     this._name = name;
     this._link = link;
     this._alt = alt;
+    this._id = _id;
+    // user info
+    this._userId = userId;
+    // console.log(this._userId)
     //template
     this._cardTemplate = document.querySelector(templateCardSelector).content;
     // listener handlers
     this._handleCardClick = handleCardClick;
+    this._handleRemoveButtonClick = handleRemoveButtonClick;
     // empty new card
     this._newCard = this._cardTemplate.cloneNode(true);
     // new card buttons
@@ -19,8 +24,9 @@ export class Card {
     this._newCardTitle = this._newCard.querySelector(".card__title");
   }
 
-  _handleRemoveButton (evt) {
-      evt.currentTarget.parentElement.remove();
+  removeCard () {
+    this._newCard.remove();
+    this._newCard = null;
   }
 
   _handleLikeButton (evt) {
@@ -28,7 +34,7 @@ export class Card {
   }
 
   _setEventListeners () {
-    this._cardRemoveButton.addEventListener("click", this._handleRemoveButton);
+    this._cardRemoveButton.addEventListener("click", () => this._handleRemoveButtonClick(this._id));
     this._newCardImage.addEventListener("click", this._handleCardClick);
     this._cardLikeButton.addEventListener("click", this._handleLikeButton);
   }

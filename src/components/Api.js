@@ -31,6 +31,7 @@ class Api {
   }
 
   deleteCard(cardId) {
+    console.log(cardId)
     return this._customFetch (`${this._baseUrl}/cards/${cardId}`, {
       headers: this._headers,
       method: 'DELETE'

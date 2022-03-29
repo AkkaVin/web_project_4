@@ -24,6 +24,7 @@ const cardTemplateSelector = ".card-template";
 const editProfilePopupSelector = ".popup_type_profile-edit";
 const addCardPopupSelector = ".popup_type_add-card";
 const imagePopupSelector = ".popup_type_image";
+const deleteCardPopupSelector = ".popup_type_delete-card";
 
 export {
   validationSettings,
@@ -35,5 +36,6 @@ export {
   cardTemplateSelector,
   editProfilePopupSelector,
   addCardPopupSelector,
-  imagePopupSelector
+  imagePopupSelector,
+  deleteCardPopupSelector
 }
