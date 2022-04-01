@@ -2,10 +2,12 @@ import {Popup} from "./Popup.js"
 
 export class PopupWithSubmit extends Popup {
 
-  constructor (popupWithSubmitSelector){
+  constructor (popupWithSubmitSelector
+    // , submitHandler
+    ){
     super(popupWithSubmitSelector);
     this._popupForm = this._popupElement.querySelector(".form");
-    // this._submitHandler = "";
+    // this._submitHandler = submitHandler;
   }
 
   setAction(action) {
@@ -20,5 +22,12 @@ export class PopupWithSubmit extends Popup {
       // this.close();
     });
 
+  }
+
+  openWithData(data) {
+    super.open();
+    if (data) {
+        this._data = data;
+    }
   }
 }

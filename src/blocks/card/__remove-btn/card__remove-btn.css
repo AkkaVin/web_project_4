@@ -18,6 +18,8 @@
   opacity: 1;
   transition: opacity 0.5s;
   transition: background-image 0.2s;
+
+  visibility:hidden;
 }
 
 .card__remove-btn:hover {

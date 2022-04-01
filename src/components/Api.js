@@ -31,13 +31,28 @@ class Api {
   }
 
   deleteCard(cardId) {
-    console.log(cardId)
+    // console.log(cardId)
     return this._customFetch (`${this._baseUrl}/cards/${cardId}`, {
       headers: this._headers,
       method: 'DELETE'
     })
   }
 
+  likeCard(cardId) {
+    // console.log(cardId)
+    return this._customFetch (`${this._baseUrl}/cards/likes/${cardId}`, {
+      headers: this._headers,
+      method: 'PUT'
+    })
+  }
+
+  unlikeCard(cardId) {
+    // console.log(cardId)
+    return this._customFetch (`${this._baseUrl}/cards/likes/${cardId}`, {
+      headers: this._headers,
+      method: 'DELETE'
+    })
+  }
 
   // other methods for working with the API
 }

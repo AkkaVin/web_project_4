@@ -41,14 +41,22 @@ let userId;
 
 Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([cardInitlData, userInfo]) => {
-    console.log(cardInitlData)
+    // console.log(cardInitlData)
+    cardInitlData.forEach ( card => {
+      card.aibleToDelete = card.owner._id == userInfo._id ? true : false
+      card.isLiked = card.likes.some ( (like) => {
+        like._id == userInfo._id
+      })
+      console.log(card.likes)
+      console.log(card.isLiked) // not work now
+    })
     cardList.renderItems(cardInitlData);
     userProfile.setUserInfo({
       userName: userInfo.name,
       userJob: userInfo.about
     })
     userId = userInfo._id;
-    console.log(userId)
+    // console.log(userId)
 })
 
 
@@ -120,7 +128,12 @@ const editProfilePopupInstance = new PopupWithForm (editProfilePopupSelector, (d
    editProfilePopupInstance.close();
 });
 
-const deleteCardPopup = new PopupWithSubmit (deleteCardPopupSelector);
+// const deleteCardPopup = new PopupWithSubmit (deleteCardPopupSelector);
+const deleteCardPopup = new PopupWithSubmit (deleteCardPopupSelector
+//   , (data) => {
+
+// }
+);
 
 const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => {
   // console.log(data)
@@ -133,6 +146,10 @@ const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => 
         name: res.name,
         link: res.link,
         alt: res.name,
+        id: res._id,
+        aibleToDelete: true,
+        likes: [],
+        owner: { _id: userId}
       }
       cardList.addItem(newCardData)
       addCardPopupInstance.close();
@@ -174,31 +191,54 @@ function initEditProfileForm() {
   })
 }
 
+function handleRemoveButtonClick (
+  // data
+  id)  {
+// console.log(id)
+  // open popup and wait for confirmation
+  deleteCardPopup.open();
+  // deleteCardPopup.openWithData(this);
+  // if confirmed  - delete from server
+   deleteCardPopup.setAction(() => {
+    api.deleteCard(
+      // data._id
+      id
+      )
+    .then ( res => {
+      // console.log(res.ok)
+      // data.removeCard();
+      deleteCardPopup.close();
+    })
+  })
+}
+
 // get new card instance
 function getNewCardInstance (data) {
-    const card = new Card(data, cardTemplateSelector, {
+
+  const card = new Card(
+    data,
+    cardTemplateSelector,
+    {
       handleCardClick: () => {
-        imagePopupInstance.open({
+      imagePopupInstance.open({
         'text': data.name,
         'src': data.link,
         'alt': data.alt,
         });
       },
-      handleRemoveButtonClick: (id) => {
-        // open popup and wait for confirmation
-        deleteCardPopup.open();
-        // if confirmed  - delete from server
-        deleteCardPopup.setAction(() => {
-          api.deleteCard(id)
+      handleRemoveButtonClick,
+      handleLikeButtonClick: (data, e) => {
+
+        console.log(data._id)
+        api.likeCard(data._id)
           .then ( res => {
-            // console.log(res.ok)
-            card.removeCard();
-            deleteCardPopup.close();
+            // data._handleLikeButton(e);
+            console.log('res', res)
           })
-        })
       }
-    }, userId)
-    return card;
+    }
+  )
+  return card;
 }
 
 
