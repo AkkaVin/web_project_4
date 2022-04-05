@@ -12,9 +12,13 @@ const validationSettings = {
 const editProfileButtonSelector = ".profile__edit-btn";
 const addCardButtonSelector = ".profile__add-card-btn";
 
+
+//profile
 // -- inputs
 const profileNameSelector = ".profile__name";
 const profileJobSelector = ".profile__job";
+// -- avatar img
+const profileAvatarSelector = ".profile__avatar";
 
 // cards
 const cardsContainerSelector = ".cards__container";
@@ -32,6 +36,7 @@ export {
   addCardButtonSelector,
   profileNameSelector,
   profileJobSelector,
+  profileAvatarSelector,
   cardsContainerSelector,
   cardTemplateSelector,
   editProfilePopupSelector,

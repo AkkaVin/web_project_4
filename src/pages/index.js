@@ -12,6 +12,7 @@ import { validationSettings,
          addCardButtonSelector,
          profileNameSelector,
          profileJobSelector,
+         profileAvatarSelector,
          cardsContainerSelector,
          cardTemplateSelector,
          editProfilePopupSelector,
@@ -41,7 +42,16 @@ let userId;
 
 Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([cardInitlData, userInfo]) => {
-    // console.log(cardInitlData)
+    // console.log(userInfo)
+    userProfile.setUserInfo({
+      userName: userInfo.name,
+      userJob: userInfo.about,
+      userAvatarSrc: userInfo.avatar,
+    })
+    userId = userInfo._id;
+    // console.log(userId)
+
+
     cardInitlData.forEach ( card => {
       card.aibleToDelete = card.owner._id == userInfo._id ? true : false
       card.isLiked = card.likes.some ( (like) => {
@@ -51,12 +61,6 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
       // console.log(card.isLiked) // not work now
     })
     cardList.renderItems(cardInitlData);
-    userProfile.setUserInfo({
-      userName: userInfo.name,
-      userJob: userInfo.about
-    })
-    userId = userInfo._id;
-    // console.log(userId)
 })
 
 
@@ -102,7 +106,8 @@ enableFormsValidation(validationSettings);
 //profile
 const userProfile = new UserInfo ({
   userNameSelector: profileNameSelector,
-  userJobSelector:  profileJobSelector
+  userJobSelector:  profileJobSelector,
+  userAvatarSelector: profileAvatarSelector,
 });
 
 
