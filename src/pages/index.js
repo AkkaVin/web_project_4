@@ -45,10 +45,10 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
     cardInitlData.forEach ( card => {
       card.aibleToDelete = card.owner._id == userInfo._id ? true : false
       card.isLiked = card.likes.some ( (like) => {
-        like._id == userInfo._id
+        return like._id === userInfo._id;
       })
-      console.log(card.likes)
-      console.log(card.isLiked) // not work now
+      // console.log(card.likes)
+      // console.log(card.isLiked) // not work now
     })
     cardList.renderItems(cardInitlData);
     userProfile.setUserInfo({
@@ -149,6 +149,7 @@ const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => 
         id: res._id,
         aibleToDelete: true,
         likes: [],
+        isLiked,
         owner: { _id: userId}
       }
       cardList.addItem(newCardData)
@@ -227,14 +228,12 @@ function getNewCardInstance (data) {
         });
       },
       handleRemoveButtonClick,
-      handleLikeButtonClick: (data, e) => {
-
-        console.log(data._id)
-        api.likeCard(data._id)
-          .then ( res => {
-            // data._handleLikeButton(e);
-            console.log('res', res)
-          })
+      handleLikeButtonClick: (instance) => {
+        const action = instance._isLiked ? 'unlikeCard': 'likeCard';
+        api[action](instance._id)
+          .then ( res =>
+            instance.setLikes(res.likes)
+        )
       }
     }
   )

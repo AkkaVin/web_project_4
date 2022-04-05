@@ -7,6 +7,7 @@ export class Card {
       _id,
       aibleToDelete,
       likes,
+      isLiked,
       owner
     },
     templateCardSelector,
@@ -23,7 +24,7 @@ export class Card {
     this._id = _id;
     this._aibleToDelete = aibleToDelete;
     this._likes = likes;
-
+    this._isLiked = isLiked;
     this._cardOwner = owner._id;
 
     // console.log(this._likes.length)
@@ -40,6 +41,8 @@ export class Card {
     if (this._aibleToDelete)
       this._cardRemoveButton.classList.add("card__remove-btn_visible");
     this._cardLikeButton = this._newCard.querySelector(".card__like-btn");
+    if (this._isLiked)
+      this._handleLikeButton();
     // new card content
     this._newCardImage = this._newCard.querySelector(".card__image");
     this._newCardTitle = this._newCard.querySelector(".card__title");
@@ -51,8 +54,8 @@ export class Card {
     this._newCard = null;
   }
 
-  _handleLikeButton (evt) {
-    evt.currentTarget.classList.toggle("card__like-btn_active")
+  _handleLikeButton () {
+    this._cardLikeButton.classList.toggle("card__like-btn_active")
   }
 
   _setEventListeners () {
@@ -64,13 +67,15 @@ export class Card {
   });
     this._newCardImage.addEventListener("click", this._handleCardClick);
 
-    this._cardLikeButton.addEventListener("click", (e) => this._handleLikeButtonClick(this, e));
+    this._cardLikeButton.addEventListener("click", (e) => this._handleLikeButtonClick(this));
 
   }
 
   setLikes (likes) {
     this._likes = likes
     this._newCardLikesCount.textContent = this._likes.length;
+    this._handleLikeButton();
+    this._isLiked = !this._isLiked;
   }
 
   getCardElement () {
