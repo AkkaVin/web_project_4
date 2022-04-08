@@ -22,6 +22,22 @@ class Api {
     })
   }
 
+  updateUserInfoTextContent(data) {
+    return this._customFetch (`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+      method: 'PATCH',
+      body: JSON.stringify(data)
+    })
+  }
+
+  updateUserInfoAvatar(data) {
+    return this._customFetch (`${this._baseUrl}/users/me/avatar`, {
+      headers: this._headers,
+      method: 'PATCH',
+      body: JSON.stringify(data)
+    })
+  }
+
   createCard(data) {
     return this._customFetch (`${this._baseUrl}/cards`, {
       headers: this._headers,

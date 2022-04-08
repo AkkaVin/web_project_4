@@ -18,7 +18,8 @@ import { validationSettings,
          editProfilePopupSelector,
          addCardPopupSelector,
          imagePopupSelector,
-         deleteCardPopupSelector  }  from '../utils/settings.js';
+         deleteCardPopupSelector,
+         editProfileAvatarSelector  }  from '../utils/settings.js';
 import { api } from "../components/Api.js";
 
 // api.getInitialCards()
@@ -43,7 +44,7 @@ let userId;
 Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([cardInitlData, userInfo]) => {
     // console.log(userInfo)
-    userProfile.setUserInfo({
+    userProfile.initUserInfo({
       userName: userInfo.name,
       userJob: userInfo.about,
       userAvatarSrc: userInfo.avatar,
@@ -70,10 +71,15 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
 const editProfileButton = document.querySelector(editProfileButtonSelector);
 const addCardButton = document.querySelector(addCardButtonSelector);
 
+//-- profile
+//avatar
+const profileAvatar = document.querySelector(profileAvatarSelector);
+
 //popups
 //-- popups
 const editProfilePopup = document.querySelector(editProfilePopupSelector);
 const addCardPopup = document.querySelector(addCardPopupSelector);
+const editProfileAvatarPopup = document.querySelector(editProfileAvatarSelector);
 //-- forms names
 const editProfileFormName = editProfilePopup
   .querySelector(validationSettings.formSelector)
@@ -81,7 +87,9 @@ const editProfileFormName = editProfilePopup
 const addCardFormName = addCardPopup
   .querySelector(validationSettings.formSelector)
   .getAttribute('name');
-
+const editProfileAvatarFormName = addCardPopup
+.querySelector(validationSettings.formSelector)
+.getAttribute('name');
 
 //------- init ------
 
@@ -126,11 +134,17 @@ const cardList = new Section({
 const imagePopupInstance = new PopupWithImage (imagePopupSelector);
 
 const editProfilePopupInstance = new PopupWithForm (editProfilePopupSelector, (data) => {
-  userProfile.setUserInfo({
-      'userName': data.name,
-      'userJob':  data.job,
-   })
-   editProfilePopupInstance.close();
+  api.updateUserInfoTextContent({
+    name: data.name,
+    about: data.job,
+  })
+  .then ( res => {
+    userProfile.setUserInfoTextContent({
+      'userName': res.name,
+      'userJob':  res.about,
+    })
+  })
+  editProfilePopupInstance.close();
 });
 
 // const deleteCardPopup = new PopupWithSubmit (deleteCardPopupSelector);
@@ -162,12 +176,24 @@ const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => 
   })
 })
 
+
+const editProfileAvatarInstance = new PopupWithForm (editProfileAvatarSelector, (data) => {
+  api.updateUserInfoAvatar({
+    avatar: data.url,
+  })
+  .then ( res => {
+    userProfile.setUserInfoAvatar(  res.avatar)
+    editProfileAvatarInstance.close();
+  })
+});
+
 // all listeners
 
 editProfilePopupInstance.setEventListeners();
 imagePopupInstance.setEventListeners();
 addCardPopupInstance.setEventListeners();
 deleteCardPopup.setEventListeners();
+editProfileAvatarInstance.setEventListeners();
 
 editProfileButton.addEventListener("click", () => {
   // init editProfile form
@@ -186,6 +212,18 @@ addCardButton.addEventListener("click", () => {
   // show popup with form
   addCardPopupInstance.open()
 });
+
+profileAvatar.addEventListener ("click", () => {
+  // init profile-avatar-edit form
+  const info = userProfile.getUserInfo();
+  editProfileAvatarInstance.setInputValues ({
+    'url': info.userAvatar
+  })
+  // reset validation
+  formValidators[editProfileAvatarFormName].resetValidation();
+  // show popup with form
+  editProfileAvatarInstance.open();
+})
 
 /*-------------------------------------------------------------------- */
 

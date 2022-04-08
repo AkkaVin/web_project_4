@@ -15,10 +15,23 @@ export class UserInfo {
     }
   }
 
-  setUserInfo ({ userName, userJob, userAvatarSrc }) {
+  setUserInfoTextContent ( {userName, userJob}) {
     this._userNameElement.textContent = userName;
     this._userJobElement.textContent = userJob;
+  }
+
+
+  setUserInfoAvatar ( userAvatarSrc) {
+    // console.log(this.userAvatarSrc)
     this._userAvatarElement.src = userAvatarSrc;
+    // console.log(this._userAvatarElement.src)
+    // debugger
+  }
+
+  initUserInfo ({ userName, userJob, userAvatarSrc }) {
+    this.setUserInfoTextContent ( {userName, userJob});
+    this.setUserInfoAvatar (userAvatarSrc);
+    // debugger
     // this._userJobElement.textContent = userJob;
     // this._userId =  this._userId ? this._userId : userId;
   }

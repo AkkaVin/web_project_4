@@ -29,6 +29,7 @@ const editProfilePopupSelector = ".popup_type_profile-edit";
 const addCardPopupSelector = ".popup_type_add-card";
 const imagePopupSelector = ".popup_type_image";
 const deleteCardPopupSelector = ".popup_type_delete-card";
+const editProfileAvatarSelector = ".popup_type_profile-avatar-edit";
 
 export {
   validationSettings,
@@ -42,5 +43,6 @@ export {
   editProfilePopupSelector,
   addCardPopupSelector,
   imagePopupSelector,
-  deleteCardPopupSelector
+  deleteCardPopupSelector,
+  editProfileAvatarSelector
 }

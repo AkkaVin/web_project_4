@@ -18,6 +18,7 @@ export class PopupWithForm extends Popup {
 
   setInputValues (data) {
     this._inputList.forEach  ( (input) => {
+    //  debugger
       input.value = data[input.name];
     })
   }
