@@ -21,5 +21,5 @@
 
 **Links**
 
-* [Link to project](https://akkavin.github.io/web_project_4/)
+* [Link to project](https://akkavin.github.io/web_project_4/index.html)
 
