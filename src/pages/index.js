@@ -48,6 +48,7 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
       userName: userInfo.name,
       userJob: userInfo.about,
       userAvatarSrc: userInfo.avatar,
+      userId: userInfo._id,
     })
     userId = userInfo._id;
     // console.log(userId)
@@ -134,11 +135,13 @@ const cardList = new Section({
 const imagePopupInstance = new PopupWithImage (imagePopupSelector);
 
 const editProfilePopupInstance = new PopupWithForm (editProfilePopupSelector, (data) => {
+  editProfilePopupInstance.setButtonTextContent("Saving...");
   api.updateUserInfoTextContent({
     name: data.name,
     about: data.job,
   })
   .then ( res => {
+    editProfilePopupInstance.setButtonTextContent("Save");
     userProfile.setUserInfoTextContent({
       'userName': res.name,
       'userJob':  res.about,
@@ -156,20 +159,24 @@ const deleteCardPopup = new PopupWithSubmit (deleteCardPopupSelector
 
 const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => {
   // console.log(data)
+  addCardPopupInstance.setButtonTextContent("Creating...");
   api.createCard({
     name: data.cardTitle,
     link: data.url
   })
     .then( res => {
+      addCardPopupInstance.setButtonTextContent("Create");
+      // console.log(userProfile.getUserId());
       const newCardData = {
         name: res.name,
         link: res.link,
         alt: res.name,
-        id: res._id,
+        _id: res._id,
         aibleToDelete: true,
         likes: [],
-        isLiked,
-        owner: { _id: userId}
+        isLiked: false,
+        // owner: { _id: userId}
+        owner: { _id: userProfile.getUserId()}
       }
       cardList.addItem(newCardData)
       addCardPopupInstance.close();
@@ -178,10 +185,12 @@ const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => 
 
 
 const editProfileAvatarInstance = new PopupWithForm (editProfileAvatarSelector, (data) => {
+  editProfileAvatarInstance.setButtonTextContent("Saving...");
   api.updateUserInfoAvatar({
     avatar: data.url,
   })
   .then ( res => {
+    editProfileAvatarInstance.setButtonTextContent("Save");
     userProfile.setUserInfoAvatar(  res.avatar)
     editProfileAvatarInstance.close();
   })
@@ -237,21 +246,19 @@ function initEditProfileForm() {
 
 function handleRemoveButtonClick (
   // data
-  id)  {
-// console.log(id)
+  instance)  {
+
   // open popup and wait for confirmation
   deleteCardPopup.open();
   // deleteCardPopup.openWithData(this);
   // if confirmed  - delete from server
    deleteCardPopup.setAction(() => {
     api.deleteCard(
-      // data._id
-      id
-      )
+      instance._id
+    )
     .then ( res => {
-      // console.log(res.ok)
-      // data.removeCard();
       deleteCardPopup.close();
+      instance.removeCard();
     })
   })
 }
@@ -272,6 +279,7 @@ function getNewCardInstance (data) {
       },
       handleRemoveButtonClick,
       handleLikeButtonClick: (instance) => {
+        // debugger
         const action = instance._isLiked ? 'unlikeCard': 'likeCard';
         api[action](instance._id)
           .then ( res =>

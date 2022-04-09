@@ -15,6 +15,10 @@ export class UserInfo {
     }
   }
 
+  getUserId () {
+    return this._userId;
+  }
+
   setUserInfoTextContent ( {userName, userJob}) {
     this._userNameElement.textContent = userName;
     this._userJobElement.textContent = userJob;
@@ -28,12 +32,10 @@ export class UserInfo {
     // debugger
   }
 
-  initUserInfo ({ userName, userJob, userAvatarSrc }) {
+  initUserInfo ({ userName, userJob, userAvatarSrc, userId }) {
     this.setUserInfoTextContent ( {userName, userJob});
     this.setUserInfoAvatar (userAvatarSrc);
-    // debugger
-    // this._userJobElement.textContent = userJob;
-    // this._userId =  this._userId ? this._userId : userId;
+    this._userId = userId;
   }
 }
 

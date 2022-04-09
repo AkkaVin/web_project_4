@@ -24,10 +24,10 @@ export class PopupWithSubmit extends Popup {
 
   }
 
-  openWithData(data) {
-    super.open();
-    if (data) {
-        this._data = data;
-    }
-  }
+  // openWithData(data) {
+  //   super.open();
+  //   if (data) {  
+  //       this._data = data;
+  //   }
+  // }
 }

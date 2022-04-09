@@ -29,7 +29,7 @@ export class Card {
 
     // console.log(this._likes.length)
     //template
-    this._cardTemplate = document.querySelector(templateCardSelector).content;
+    this._cardTemplate = document.querySelector(templateCardSelector).content.querySelector(".card");
     // listener handlers
     this._handleCardClick = handleCardClick;
     this._handleRemoveButtonClick = handleRemoveButtonClick;
@@ -61,8 +61,11 @@ export class Card {
   _setEventListeners () {
   this._cardRemoveButton.addEventListener("click", () => {
     // console.log(this)
-    this._handleRemoveButtonClick(this._id)
-    // .bind(this._handleRemoveButtonClick, this._id)
+    //      this._handleRemoveButtonClick(this._id)
+
+    this._handleRemoveButtonClick(this)
+
+
     // this.removeCard();
   });
     this._newCardImage.addEventListener("click", this._handleCardClick);
