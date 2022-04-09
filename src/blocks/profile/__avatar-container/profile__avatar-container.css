@@ -2,4 +2,5 @@
   background-image: url(../../../images/profile__avatar-on-hover.svg);
   background-repeat: no-repeat;
   background-position: 50%;
+  border-radius: 50%;
 }

@@ -19,6 +19,7 @@ const profileNameSelector = ".profile__name";
 const profileJobSelector = ".profile__job";
 // -- avatar img
 const profileAvatarSelector = ".profile__avatar";
+const profileAvatarContainerSelector = ".profile__avatar-container";
 
 // cards
 const cardsContainerSelector = ".cards__container";
@@ -38,6 +39,7 @@ export {
   profileNameSelector,
   profileJobSelector,
   profileAvatarSelector,
+  profileAvatarContainerSelector,
   cardsContainerSelector,
   cardTemplateSelector,
   editProfilePopupSelector,

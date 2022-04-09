@@ -12,6 +12,7 @@ import { validationSettings,
          profileNameSelector,
          profileJobSelector,
          profileAvatarSelector,
+         profileAvatarContainerSelector,
          cardsContainerSelector,
          cardTemplateSelector,
          editProfilePopupSelector,
@@ -48,7 +49,7 @@ const addCardButton = document.querySelector(addCardButtonSelector);
 
 //-- profile
 //avatar
-const profileAvatar = document.querySelector(profileAvatarSelector);
+const profileAvatarContainer = document.querySelector(profileAvatarContainerSelector);
 
 //popups
 //-- popups
@@ -188,7 +189,7 @@ addCardButton.addEventListener("click", () => {
   addCardPopupInstance.open()
 });
 
-profileAvatar.addEventListener ("click", () => {
+profileAvatarContainer.addEventListener ("click", () => {
   // init profile-avatar-edit form
   const info = userProfile.getUserInfo();
   editProfileAvatarInstance.setInputValues ({
