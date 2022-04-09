@@ -3,7 +3,6 @@ export class UserInfo {
     this._userNameElement = document.querySelector(userNameSelector);
     this._userJobElement = document.querySelector(userJobSelector);
     this._userAvatarElement = document.querySelector(userAvatarSelector);
-    // this._id = null;
   }
 
   getUserInfo () {
@@ -11,7 +10,6 @@ export class UserInfo {
       "userName": this._userNameElement.textContent,
       "userJob": this._userJobElement.textContent,
       "userAvatar": this._userAvatarElement.src
-      // "userId": this._userId
     }
   }
 
@@ -26,10 +24,7 @@ export class UserInfo {
 
 
   setUserInfoAvatar ( userAvatarSrc) {
-    // console.log(this.userAvatarSrc)
     this._userAvatarElement.src = userAvatarSrc;
-    // console.log(this._userAvatarElement.src)
-    // debugger
   }
 
   initUserInfo ({ userName, userJob, userAvatarSrc, userId }) {

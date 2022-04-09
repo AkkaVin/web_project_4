@@ -27,7 +27,6 @@ export class Card {
     this._isLiked = isLiked;
     this._cardOwner = owner._id;
 
-    // console.log(this._likes.length)
     //template
     this._cardTemplate = document.querySelector(templateCardSelector).content.querySelector(".card");
     // listener handlers
@@ -59,19 +58,12 @@ export class Card {
   }
 
   _setEventListeners () {
-  this._cardRemoveButton.addEventListener("click", () => {
-    // console.log(this)
-    //      this._handleRemoveButtonClick(this._id)
-
-    this._handleRemoveButtonClick(this)
-
-
-    // this.removeCard();
-  });
+    this._cardRemoveButton.addEventListener("click", () => {
+      this._handleRemoveButtonClick(this)
+    });
     this._newCardImage.addEventListener("click", this._handleCardClick);
 
     this._cardLikeButton.addEventListener("click", (e) => this._handleLikeButtonClick(this));
-
   }
 
   setLikes (likes) {

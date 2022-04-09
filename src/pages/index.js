@@ -6,7 +6,6 @@ import { Section }        from "../components/Section.js"
 import { PopupWithImage } from '../components/PopupWithImage';
 import { PopupWithForm }  from "../components/PopupWithForm";
 import { PopupWithSubmit } from "../components/popupWithSubmit";
-import { Cards as initialCards } from '../utils/initData.js';
 import { validationSettings,
          editProfileButtonSelector,
          addCardButtonSelector,
@@ -22,49 +21,24 @@ import { validationSettings,
          editProfileAvatarSelector  }  from '../utils/settings.js';
 import { api } from "../components/Api.js";
 
-// api.getInitialCards()
-//   .then ( res => {
-//     cardList.renderItems(res);
-//     // console.log('res',res)
-//     // TODO check alt tag!!!
-//   })
-
-// api.getUserInfo()
-//   .then ( res => {
-//     userProfile.setUserInfo({
-//       userName: res.name,
-//       userJob: res.about
-//     })
-//     // console.log('res',res)
-// })
-
-let userId;
-//  TODO incapsulate into userInfo => cause not changed
 
 Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([cardInitlData, userInfo]) => {
-    // console.log(userInfo)
     userProfile.initUserInfo({
       userName: userInfo.name,
       userJob: userInfo.about,
       userAvatarSrc: userInfo.avatar,
       userId: userInfo._id,
     })
-    userId = userInfo._id;
-    // console.log(userId)
-
 
     cardInitlData.forEach ( card => {
       card.aibleToDelete = card.owner._id == userInfo._id ? true : false
       card.isLiked = card.likes.some ( (like) => {
         return like._id === userInfo._id;
       })
-      // console.log(card.likes)
-      // console.log(card.isLiked) // not work now
     })
     cardList.renderItems(cardInitlData);
 })
-
 
 
 //page
@@ -88,7 +62,7 @@ const editProfileFormName = editProfilePopup
 const addCardFormName = addCardPopup
   .querySelector(validationSettings.formSelector)
   .getAttribute('name');
-const editProfileAvatarFormName = addCardPopup
+const editProfileAvatarFormName = editProfileAvatarPopup
 .querySelector(validationSettings.formSelector)
 .getAttribute('name');
 
@@ -122,14 +96,11 @@ const userProfile = new UserInfo ({
 
 // card list
 const cardList = new Section({
-  // items: initialCards,
   items: [],
   renderer: (cardData) => {
     return getNewCardInstance (cardData).getCardElement()
   }
 }, cardsContainerSelector);
-
-// cardList.renderItems(initialCards);
 
 //-- popup instances
 const imagePopupInstance = new PopupWithImage (imagePopupSelector);
@@ -150,12 +121,7 @@ const editProfilePopupInstance = new PopupWithForm (editProfilePopupSelector, (d
   editProfilePopupInstance.close();
 });
 
-// const deleteCardPopup = new PopupWithSubmit (deleteCardPopupSelector);
-const deleteCardPopup = new PopupWithSubmit (deleteCardPopupSelector
-//   , (data) => {
-
-// }
-);
+const deleteCardPopup = new PopupWithSubmit (deleteCardPopupSelector);
 
 const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => {
   // console.log(data)
@@ -244,18 +210,12 @@ function initEditProfileForm() {
   })
 }
 
-function handleRemoveButtonClick (
-  // data
-  instance)  {
-
+function handleRemoveButtonClick (instance)  {
   // open popup and wait for confirmation
   deleteCardPopup.open();
-  // deleteCardPopup.openWithData(this);
   // if confirmed  - delete from server
-   deleteCardPopup.setAction(() => {
-    api.deleteCard(
-      instance._id
-    )
+  deleteCardPopup.setAction(() => {
+    api.deleteCard(instance._id)
     .then ( res => {
       deleteCardPopup.close();
       instance.removeCard();
@@ -279,7 +239,6 @@ function getNewCardInstance (data) {
       },
       handleRemoveButtonClick,
       handleLikeButtonClick: (instance) => {
-        // debugger
         const action = instance._isLiked ? 'unlikeCard': 'likeCard';
         api[action](instance._id)
           .then ( res =>

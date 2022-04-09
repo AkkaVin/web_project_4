@@ -3,17 +3,22 @@
   height: 120px;
   width: 120px;
 
-  background-color: rgba(0, 0, 0, 0.8);
+  /* background-color: rgb(0, 0, 0); */
   background-image: url(../../../images/profile__avatar-on-hover.svg);
+  /* background-color: blue; */
   background-repeat: no-repeat;
   background-position: 50%;
 
   cursor: pointer;
   opacity: 1;
   transition: opacity 0.5s;
+  /* transition: opacity 0.5s, background-color 0.5s; */
 
 }
 
 .profile__avatar:hover {
   opacity: 0.2;
+  /* opacity: 0; */
+  /* background-color: rgba(0, 0, 0, 1); */
+  /* background-image: url(../../../images/profile__avatar-on-hover.svg); */
 }

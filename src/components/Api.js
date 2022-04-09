@@ -6,7 +6,7 @@ class Api {
 
   _customFetch (fullUrl, headers) {
     return fetch (fullUrl, headers)
-      .then(res => res.ok ? res.json(): Promise.reject(res.statusText))
+      .then(res => res.ok ? res.json(): Promise.reject(res.status + " " + res.statusText))
       .catch(console.log)
   }
 
@@ -55,7 +55,6 @@ class Api {
   }
 
   likeCard(cardId) {
-    // console.log(cardId)
     return this._customFetch (`${this._baseUrl}/cards/likes/${cardId}`, {
       headers: this._headers,
       method: 'PUT'
@@ -63,14 +62,12 @@ class Api {
   }
 
   unlikeCard(cardId) {
-    // console.log(cardId)
     return this._customFetch (`${this._baseUrl}/cards/likes/${cardId}`, {
       headers: this._headers,
       method: 'DELETE'
     })
   }
 
-  // other methods for working with the API
 }
 
  export const api = new Api({
