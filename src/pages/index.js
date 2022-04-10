@@ -33,7 +33,7 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
     })
 
     cardInitlData.forEach ( card => {
-      card.aibleToDelete = card.owner._id == userInfo._id ? true : false
+      card.ableToDelete = card.owner._id == userInfo._id ? true : false
       card.isLiked = card.likes.some ( (like) => {
         return like._id === userInfo._id;
       })
