@@ -114,17 +114,19 @@ const editProfilePopupInstance = new PopupWithForm (editProfilePopupSelector, (d
     about: data.job,
   })
   .then ( res => {
-    editProfilePopupInstance.setButtonTextContent("Save");
     userProfile.setUserInfoTextContent({
       'userName': res.name,
       'userJob':  res.about,
     })
   })
   .catch (err => console.log(err))
+  .finally ( () => {
+    editProfilePopupInstance.setButtonTextContent("Save");
+  })
   editProfilePopupInstance.close();
 });
 
-const deleteCardPopup = new PopupWithSubmit (deleteCardPopupSelector);
+const deleteCardPopupInstance = new PopupWithSubmit (deleteCardPopupSelector);
 
 const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => {
   // console.log(data)
@@ -134,8 +136,6 @@ const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => 
     link: data.url
   })
     .then( res => {
-        addCardPopupInstance.setButtonTextContent("Create");
-        // console.log(userProfile.getUserId());
         const newCardData = {
           name: res.name,
           link: res.link,
@@ -151,6 +151,9 @@ const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => 
         addCardPopupInstance.close();
     })
     .catch (err => console.log(err))
+    .finally ( () => {
+      addCardPopupInstance.setButtonTextContent("Create");
+    })
 })
 
 
@@ -160,11 +163,13 @@ const editProfileAvatarInstance = new PopupWithForm (editProfileAvatarSelector, 
     avatar: data.url,
   })
   .then ( res => {
-    editProfileAvatarInstance.setButtonTextContent("Save");
     userProfile.setUserInfoAvatar(  res.avatar)
     editProfileAvatarInstance.close();
   })
   .catch (err => console.log(err))
+  .finally ( () => {
+    editProfileAvatarInstance.setButtonTextContent("Save");
+  })
 });
 
 // all listeners
@@ -172,7 +177,7 @@ const editProfileAvatarInstance = new PopupWithForm (editProfileAvatarSelector, 
 editProfilePopupInstance.setEventListeners();
 imagePopupInstance.setEventListeners();
 addCardPopupInstance.setEventListeners();
-deleteCardPopup.setEventListeners();
+deleteCardPopupInstance.setEventListeners();
 editProfileAvatarInstance.setEventListeners();
 
 editProfileButton.addEventListener("click", () => {
@@ -217,15 +222,19 @@ function initEditProfileForm() {
 
 function handleRemoveButtonClick (instance)  {
   // open popup and wait for confirmation
-  deleteCardPopup.open();
+  deleteCardPopupInstance.open();
   // if confirmed  - delete from server
-  deleteCardPopup.setAction(() => {
+  deleteCardPopupInstance.setAction(() => {
+    deleteCardPopupInstance.setButtonTextContent("Deleting...");
     api.deleteCard(instance._id)
     .then ( res => {
-      deleteCardPopup.close();
+      deleteCardPopupInstance.close();
       instance.removeCard();
     })
     .catch (err => console.log(err))
+    .finally ( () => {
+      deleteCardPopupInstance.setButtonTextContent("Yes");
+    })
   })
 }
 
@@ -250,7 +259,7 @@ function getNewCardInstance (data) {
           .then ( res =>
             instance.setLikes(res.likes)
         )
-        .catch (err => console.log(err))  
+        .catch (err => console.log(err))
       }
     }
   )

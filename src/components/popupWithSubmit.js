@@ -5,6 +5,7 @@ export class PopupWithSubmit extends Popup {
   constructor (popupWithSubmitSelector) {
     super(popupWithSubmitSelector);
     this._popupForm = this._popupElement.querySelector(".form");
+    this._submitButton = this._popupForm.querySelector(".form__save-btn");
   }
 
   setAction(action) {
@@ -17,5 +18,9 @@ export class PopupWithSubmit extends Popup {
       e.preventDefault();
       this._handleSubmit()
     });
+  }
+
+  setButtonTextContent (text) {
+    this._submitButton.textContent = text;
   }
 }
