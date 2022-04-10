@@ -118,12 +118,12 @@ const editProfilePopupInstance = new PopupWithForm (editProfilePopupSelector, (d
       'userName': res.name,
       'userJob':  res.about,
     })
+    editProfilePopupInstance.close();
   })
   .catch (err => console.log(err))
   .finally ( () => {
     editProfilePopupInstance.setButtonTextContent("Save");
   })
-  editProfilePopupInstance.close();
 });
 
 const deleteCardPopupInstance = new PopupWithSubmit (deleteCardPopupSelector);
@@ -155,7 +155,6 @@ const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => 
       addCardPopupInstance.setButtonTextContent("Create");
     })
 })
-
 
 const editProfileAvatarInstance = new PopupWithForm (editProfileAvatarSelector, (data) => {
   editProfileAvatarInstance.setButtonTextContent("Saving...");
