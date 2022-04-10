@@ -5,7 +5,7 @@ export class Card {
       name,
       link,
       _id,
-      aibleToDelete,
+      ableToDelete,
       likes,
       isLiked,
       owner
@@ -22,7 +22,7 @@ export class Card {
     this._link = link;
     this._alt = name;
     this._id = _id;
-    this._aibleToDelete = aibleToDelete;
+    this._ableToDelete = ableToDelete;
     this._likes = likes;
     this._isLiked = isLiked;
     this._cardOwner = owner._id;
@@ -37,7 +37,7 @@ export class Card {
     this._newCard = this._cardTemplate.cloneNode(true);
     // new card buttons
     this._cardRemoveButton = this._newCard.querySelector(".card__remove-btn");
-    if (this._aibleToDelete)
+    if (this._ableToDelete)
       this._cardRemoveButton.classList.add("card__remove-btn_visible");
     this._cardLikeButton = this._newCard.querySelector(".card__like-btn");
     if (this._isLiked)
