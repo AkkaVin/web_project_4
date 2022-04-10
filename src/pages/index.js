@@ -40,6 +40,7 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
     })
     cardList.renderItems(cardInitlData);
 })
+.catch (err => console.log(err))
 
 
 //page
@@ -119,6 +120,7 @@ const editProfilePopupInstance = new PopupWithForm (editProfilePopupSelector, (d
       'userJob':  res.about,
     })
   })
+  .catch (err => console.log(err))
   editProfilePopupInstance.close();
 });
 
@@ -132,22 +134,23 @@ const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => 
     link: data.url
   })
     .then( res => {
-      addCardPopupInstance.setButtonTextContent("Create");
-      // console.log(userProfile.getUserId());
-      const newCardData = {
-        name: res.name,
-        link: res.link,
-        alt: res.name,
-        _id: res._id,
-        aibleToDelete: true,
-        likes: [],
-        isLiked: false,
-        // owner: { _id: userId}
-        owner: { _id: userProfile.getUserId()}
-      }
-      cardList.addItem(newCardData)
-      addCardPopupInstance.close();
-  })
+        addCardPopupInstance.setButtonTextContent("Create");
+        // console.log(userProfile.getUserId());
+        const newCardData = {
+          name: res.name,
+          link: res.link,
+          alt: res.name,
+          _id: res._id,
+          aibleToDelete: true,
+          likes: [],
+          isLiked: false,
+          // owner: { _id: userId}
+          owner: { _id: userProfile.getUserId()}
+        }
+        cardList.addItem(newCardData)
+        addCardPopupInstance.close();
+    })
+    .catch (err => console.log(err))
 })
 
 
@@ -161,6 +164,7 @@ const editProfileAvatarInstance = new PopupWithForm (editProfileAvatarSelector, 
     userProfile.setUserInfoAvatar(  res.avatar)
     editProfileAvatarInstance.close();
   })
+  .catch (err => console.log(err))
 });
 
 // all listeners
@@ -221,6 +225,7 @@ function handleRemoveButtonClick (instance)  {
       deleteCardPopup.close();
       instance.removeCard();
     })
+    .catch (err => console.log(err))
   })
 }
 
@@ -245,6 +250,7 @@ function getNewCardInstance (data) {
           .then ( res =>
             instance.setLikes(res.likes)
         )
+        .catch (err => console.log(err))  
       }
     }
   )

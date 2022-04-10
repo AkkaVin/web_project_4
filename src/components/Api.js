@@ -7,7 +7,7 @@ class Api {
   _customFetch (fullUrl, headers) {
     return fetch (fullUrl, headers)
       .then(res => res.ok ? res.json(): Promise.reject(res.status + " " + res.statusText))
-      .catch(console.log)
+      // .catch(console.log)
   }
 
   getInitialCards() {
