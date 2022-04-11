@@ -33,24 +33,12 @@ export class Card {
     this._handleCardClick = handleCardClick;
     this._handleRemoveButtonClick = handleRemoveButtonClick;
     this._handleLikeButtonClick = handleLikeButtonClick;
-    // empty new card
-    this._newCard = this._cardTemplate.cloneNode(true);
-    // new card buttons
-    this._cardRemoveButton = this._newCard.querySelector(".card__remove-btn");
-    if (this._ableToDelete)
-      this._cardRemoveButton.classList.add("card__remove-btn_visible");
-    this._cardLikeButton = this._newCard.querySelector(".card__like-btn");
-    if (this._isLiked)
-      this._handleLikeButton();
-    // new card content
-    this._newCardImage = this._newCard.querySelector(".card__image");
-    this._newCardTitle = this._newCard.querySelector(".card__title");
-    this._newCardLikesCount = this._newCard.querySelector(".card__likes-count");
+
   }
 
   removeCard () {
-    this._newCard.remove();
-    this._newCard = null;
+    this._card.remove();
+    this._card = null;
   }
 
   _handleLikeButton () {
@@ -61,26 +49,46 @@ export class Card {
     this._cardRemoveButton.addEventListener("click", () => {
       this._handleRemoveButtonClick(this)
     });
-    this._newCardImage.addEventListener("click", this._handleCardClick);
+    this._cardImage.addEventListener("click", this._handleCardClick);
 
     this._cardLikeButton.addEventListener("click", (e) => this._handleLikeButtonClick(this));
   }
 
   setLikes (likes) {
     this._likes = likes
-    this._newCardLikesCount.textContent = this._likes.length;
+    this._cardLikesCount.textContent = this._likes.length;
     this._handleLikeButton();
     this._isLiked = !this._isLiked;
   }
 
-  getCardElement () {
-    this._newCardImage.src = this._link;
-    this._newCardImage.alt = this._alt;
-    this._newCardTitle.textContent = this._name;
-    this._newCardLikesCount.textContent = this._likes.length;
+  createCardElement () {
+
+    // empty card
+      // this._card = this._cardTemplate.cloneNode(true);
+    this._getElement();
+    // card buttons
+    this._cardRemoveButton = this._card.querySelector(".card__remove-btn");
+    if (this._ableToDelete)
+      this._cardRemoveButton.classList.add("card__remove-btn_visible");
+    this._cardLikeButton = this._card.querySelector(".card__like-btn");
+    if (this._isLiked)
+      this._handleLikeButton();
+    // card content
+    this._cardImage = this._card.querySelector(".card__image");
+    this._cardTitle = this._card.querySelector(".card__title");
+    this._cardLikesCount = this._card.querySelector(".card__likes-count");
+
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._alt;
+    this._cardTitle.textContent = this._name;
+    this._cardLikesCount.textContent = this._likes.length;
 
     this._setEventListeners ();
 
-    return this._newCard;
+    return this._card;
+  }
+
+  _getElement () {
+    this._card = this._cardTemplate.cloneNode(true);
   }
 }

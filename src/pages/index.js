@@ -100,7 +100,7 @@ const userProfile = new UserInfo ({
 const cardList = new Section({
   items: [],
   renderer: (cardData) => {
-    return getNewCardInstance (cardData).getCardElement()
+    return getNewCardInstance (cardData).createCardElement()
   }
 }, cardsContainerSelector);
 
@@ -141,7 +141,7 @@ const addCardPopupInstance = new PopupWithForm (addCardPopupSelector, (data) => 
           link: res.link,
           alt: res.name,
           _id: res._id,
-          aibleToDelete: true,
+          ableToDelete: true,
           likes: [],
           isLiked: false,
           // owner: { _id: userId}
